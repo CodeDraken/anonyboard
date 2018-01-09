@@ -1,0 +1,9 @@
+{
+  "name": "anonyboard",
+  "version": "1.0.0",
+  "description": "an anonymous message board",
+  "main": "index.js",
+  "repository": "git@github.com:CodeDraken/anonyboard.git",
+  "author": "CodeDraken",
+  "license": "MIT"
+}
