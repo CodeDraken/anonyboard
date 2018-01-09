@@ -5,5 +5,35 @@
   "main": "index.js",
   "repository": "git@github.com:CodeDraken/anonyboard.git",
   "author": "CodeDraken",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": "8.9.0",
+    "npm": "5.5.1"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "start-watch": "nodemon index.js",
+    "test": "mocha **/*.test.js",
+    "test-watch": "nodemon yarn test",
+    "client": "cd client && yarn start",
+    "dev": "concurrently \"yarn start-watch\" \"yarn client\"",
+    "lt": "lt -p 5000 -s anonyboardlt000",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "concurrently": "^3.5.1",
+    "localtunnel": "^1.8.3",
+    "nodemon": "^1.14.10"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1",
+    "mongoose": "^4.13.9"
+  }
 }
