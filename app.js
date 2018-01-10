@@ -15,6 +15,7 @@ const app = express()
 app.use(bodyParser.json())
 
 // routes
+require('./routes/threadRoutes')(app)
 
 // production server
 if (process.env.NODE_ENV === 'production') {
