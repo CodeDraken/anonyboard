@@ -15,9 +15,6 @@ const app = express()
 app.use(bodyParser.json())
 
 // routes
-app.get('/', (req, res) => {
-  res.send('Systems are up!')
-})
 
 // production server
 if (process.env.NODE_ENV === 'production') {
@@ -28,6 +25,10 @@ if (process.env.NODE_ENV === 'production') {
   const path = require('path')
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+} else {
+  app.get('/', (req, res) => {
+    res.status(200).send('Server is up and running!')
   })
 }
 

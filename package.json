@@ -10,13 +10,16 @@
     "node": "8.9.0",
     "npm": "5.5.1"
   },
+  "jest": {
+    "modulePathIgnorePatterns": [ "client/" ]
+  },
   "standard": {
     "parser": "babel-eslint"
   },
   "scripts": {
     "start": "node index.js",
     "start-watch": "nodemon index.js",
-    "test": "mocha **/*.test.js",
+    "test": "jest",
     "test-watch": "nodemon yarn test",
     "client": "cd client && yarn start",
     "dev": "concurrently \"yarn start-watch\" \"yarn client\"",
@@ -24,10 +27,16 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.1",
+    "babel-preset-env": "^1.6.1",
     "concurrently": "^3.5.1",
+    "expect": "^22.0.5",
+    "jest": "^22.0.5",
     "localtunnel": "^1.8.3",
-    "nodemon": "^1.14.10"
+    "nodemon": "^1.14.10",
+    "superagent": "^3.8.2",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "axios": "^0.17.1",
