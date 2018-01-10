@@ -2,13 +2,16 @@
 
 const threadController = {
   async getThreads (req, res) {
+    const { board } = req.params
     try {
       res.send({
         page: 1,
+        board,
         threads: []
       })
     } catch (err) {
-      res.status(500)
+      console.log(err)
+      res.status(500).send('Oops something went wrong!')
     }
   }
 }

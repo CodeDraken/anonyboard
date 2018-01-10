@@ -1,8 +1,11 @@
 // threadRoutes - thread API routes
-// all routes are api/threads/route
+// all routes are (api/threads)/route
 
+const express = require('express')
+
+const threadRouter = express.Router()
 const threadController = require('../controllers/threadController')
 
-module.exports = app => {
-  app.get('/api/threads', threadController.getThreads)
-}
+threadRouter.get('/:board', threadController.getThreads)
+
+module.exports = threadRouter

@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
 const { mongoURI } = require('./config/keys')
+const threadRoutes = require('./routes/threadRoutes')
 
 mongoose.Promise = global.Promise
 mongoose.connect(mongoURI, { useMongoClient: true }, () => {
@@ -15,7 +16,7 @@ const app = express()
 app.use(bodyParser.json())
 
 // routes
-require('./routes/threadRoutes')(app)
+app.use('/api/threads', threadRoutes)
 
 // production server
 if (process.env.NODE_ENV === 'production') {
