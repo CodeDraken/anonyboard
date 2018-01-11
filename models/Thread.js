@@ -3,16 +3,12 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
-const replySchema = new Schema({
-  body: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now() }
-})
-
 const threadSchema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
-  replies: [ replySchema ],
+  board: { type: String },
   password: { type: String, required: true },
+  _replies: [{ type: Schema.ObjectId, ref: 'Reply' }]
 
   createdAt: { type: Date, default: Date.now() }
 })
