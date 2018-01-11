@@ -1,5 +1,7 @@
 // threadController - handles all thread related actions
 
+const { Thread } = require('models')
+
 const threadController = {
   async getThreadsByBoard (req, res) {
     const { board } = req.params
@@ -31,12 +33,17 @@ const threadController = {
 
   async createThread (req, res) {
     const { board } = req.params
+    
     try {
-      res.send({
-        page: 1,
+      const { title, body, board, password } = req.body
+      const thread = await new Thread({
+        title,
+        body,
         board,
-        threads: []
-      })
+        password
+      }).save()
+
+      return res.send(thread)
     } catch (err) {
       console.log(err)
       res.status(500).send('Oops something went wrong!')

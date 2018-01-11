@@ -8,8 +8,8 @@ const threadSchema = new Schema({
   body: { type: String, required: true },
   board: { type: String, required: true },
   password: { type: String, required: true },
-  _replies: [{ type: Schema.ObjectId, ref: 'Reply' }],
 
+  _replies: [{ type: Schema.ObjectId, ref: 'Reply' }],
   createdAt: { type: Date, default: Date.now() }
 })
 

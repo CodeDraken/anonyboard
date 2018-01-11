@@ -1,14 +1,9 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
-const { mongoURI } = require('./config/keys')
 const threadRoutes = require('./routes/threadRoutes')
 
-mongoose.Promise = global.Promise
-mongoose.connect(mongoURI, { useMongoClient: true }, () => {
-  console.log(`Connected to MongoDB at: ${mongoURI}`)
-})
+const { mongoose } = require('db/mongoose')
 
 const app = express()
 
