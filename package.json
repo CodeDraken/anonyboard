@@ -17,10 +17,10 @@
     "parser": "babel-eslint"
   },
   "scripts": {
-    "start": "node index.js",
-    "start-watch": "nodemon index.js",
-    "test": "jest",
-    "test-watch": "nodemon yarn test",
+    "start": "NODE_PATH=. node index.js",
+    "start-watch": "NODE_PATH=. nodemon index.js",
+    "test": "NODE_PATH=. jest",
+    "test-watch": "NODE_PATH=. nodemon yarn test",
     "client": "cd client && yarn start",
     "dev": "concurrently \"yarn start-watch\" \"yarn client\"",
     "lt": "lt -p 5000 -s anonyboardlt000",
