@@ -3,19 +3,19 @@
 
 const express = require('express')
 
-const threadRouter = express.Router()
+const router = express.Router()
 const threadController = require('../controllers/threadController')
 
 // get threads on a specific board
-threadRouter.get('/:board', threadController.getThreadsByBoard)
+router.route('/:board')
+  .all((req, res, next) => {
+    const { board } = req.params
+    req.boardName = board.toLowerCase()
+    next()
+  })
+  .get(threadController.getThreadsByBoard)
+  .post(threadController.createThread)
+  .put(threadController.reportThread)
+  .delete(threadController.deleteThread)
 
-// create a thread
-threadRouter.post('/:board', threadController.createThread)
-
-// report a thread
-threadRouter.put('/:board', threadController.reportThread)
-
-// delete a thread using the password
-threadRouter.delete('/:board', threadController.deleteThread)
-
-module.exports = threadRouter
+module.exports = router
