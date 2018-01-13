@@ -25,7 +25,7 @@ describe('Thread Routes', () => {
   describe('POST api/threads/:board', () => {
     beforeEach(populateThreads)
 
-    it('creates a new thread', async () => {
+    it('should creates a new thread', async () => {
       const thread = {
         title: 'Test',
         body: 'Hot',
@@ -45,6 +45,28 @@ describe('Thread Routes', () => {
 
         expect(threadDB.length).toBe(1)
         expect(threadDB[0].body).toBe(thread.body)
+      } catch (err) {
+        throw new Error(err)
+      }
+    })
+  })
+
+  describe('GET api/threads/:board', () => {
+    beforeEach(populateThreads)
+
+    it('should list recent threads', async () => {
+      try {
+        const res = await request(app).get('/api/threads/test_board')
+
+        expect(res.statusCode).toBe(200)
+        expect(res.body.threads).toBeDefined()
+        expect(res.body.threads.length).toBe(2)
+
+        const testThread = res.body.threads
+          .filter(t => t._id === testThreads[0]._id)[0]
+
+        expect(testThread).toBeDefined()
+        expect(testThread).toBe(expect.objectContaining(testThreads[0]))
       } catch (err) {
         throw new Error(err)
       }

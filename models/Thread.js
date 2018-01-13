@@ -8,9 +8,11 @@ const threadSchema = new Schema({
   body: { type: String, required: true },
   board: { type: String, required: true },
   password: { type: String, required: true },
+  replyCount: { type: Number, default: 0 },
 
   _replies: [{ type: Schema.ObjectId, ref: 'Reply' }],
-  createdAt: { type: Date, default: Date.now() }
+  createdAt: { type: Date, default: Date.now() },
+  bumpedAt: { type: Date, default: Date.now() }
 })
 
 module.exports = mongoose.model('Thread', threadSchema)
