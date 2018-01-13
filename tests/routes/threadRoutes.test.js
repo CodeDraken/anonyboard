@@ -1,20 +1,23 @@
 // threadRoutes tests
-const mongoose = require('mongoose')
 const request = require('supertest')
+const expect = require('expect')
 
-// const { mongoTestURI } = require('config/keys')
 const app = require('app')
 const { Thread } = require('models')
 const threadRoutes = require('routes/threadRoutes')
 
-// const { testThreads, populateThreads } = require('utils/seed')
+const { testThreads, populateThreads } = require('tests/seed')
 
 // describe('app.js', () => {
 //   describe('Test the root path /', () => {
 //     it('should respond to the GET method', async () => {
-//       const res = await request(app).get('/')
+//       try {
+//         const res = await request(app).get('/')
 
-//       expect(res.statusCode).toBe(200)
+//         expect(res.statusCode).toBe(200)
+//       } catch (err) {
+//         throw new Error(err)
+//       }
 //     })
 //   })
 // })
@@ -23,15 +26,13 @@ const threadRoutes = require('routes/threadRoutes')
 //   mongoose.connect(mongoTestURI)
 // })
 
-// TODO: it's all broken :(
-
 describe('Thread Routes', () => {
 
 
   describe('POST api/threads/:board', () => {
-    // beforeEach(populateThreads)
+    beforeEach(populateThreads)
 
-    it('creates a new thread', async (done) => {
+    it('creates a new thread', async () => {
       const thread = {
         title: 'Test',
         body: 'Hot',
@@ -51,10 +52,8 @@ describe('Thread Routes', () => {
 
         expect(threadDB.length).toBe(1)
         expect(threadDB[0].body).toBe(thread.body)
-
-        done()
       } catch (err) {
-        done(err)
+        throw new Error(err)
       }
     })
 

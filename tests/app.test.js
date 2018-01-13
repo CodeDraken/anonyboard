@@ -1,10 +1,12 @@
 // app.js tests
+
 const mongoose = require('mongoose')
 const request = require('supertest')
+const expect = require('expect')
 
 const app = require('../app')
 
-afterAll((done) => {
+after(done => {
   mongoose.disconnect(done)
 })
 

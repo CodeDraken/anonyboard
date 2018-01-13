@@ -23,10 +23,9 @@ const testThreads = [
 
 // TODO: add replies and link them
 
-const populateThreads = async done => {
-  Thread.remove({})
+const populateThreads = () => {
+  return Thread.remove({})
     .then(() => Thread.insertMany(testThreads))
-    .then(() => done())
 
   // try {
   //   await Thread.remove({})

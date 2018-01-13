@@ -11,7 +11,9 @@
     "npm": "5.5.1"
   },
   "jest": {
-    "modulePathIgnorePatterns": [ "client/" ],
+    "modulePathIgnorePatterns": [
+      "client/"
+    ],
     "testEnvironment": "node",
     "resetModules": true
   },
@@ -21,8 +23,8 @@
   "scripts": {
     "start": "NODE_PATH=. node index.js",
     "start-watch": "NODE_PATH=. nodemon index.js",
-    "test": "NODE_PATH=. jest",
-    "test-watch": "NODE_PATH=. jest --watch",
+    "test": "NODE_ENV=test NODE_PATH=. mocha --recursive tests",
+    "test-watch": "nodemon --exec 'yarn test'",
     "client": "cd client && yarn start",
     "dev": "concurrently \"yarn start-watch\" \"yarn client\"",
     "lt": "lt -p 5000 -s anonyboardlt000",
@@ -33,9 +35,9 @@
     "babel-eslint": "^8.2.1",
     "babel-preset-env": "^1.6.1",
     "concurrently": "^3.5.1",
-    "expect": "^22.0.5",
-    "jest": "^22.0.5",
+    "expect": "^22.0.6",
     "localtunnel": "^1.8.3",
+    "mocha": "^4.1.0",
     "nodemon": "^1.14.10",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
