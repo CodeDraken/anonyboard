@@ -8,10 +8,12 @@
     }
   },
   "standard": {
+    "globals": ["$", "jQuery", "fetch"],
+    "ignore": [
+        "node_modules/**"
+    ],
     "parser": "babel-eslint",
-    "envs": [
-      "jest"
-    ]
+    "envs": ["jest", "mocha", "node"]
   },
   "dependencies": {
     "axios": "^0.17.1",

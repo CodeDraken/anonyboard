@@ -33,7 +33,7 @@ const threadController = {
 
   async createThread (req, res) {
     const { board } = req.params
-    
+
     try {
       const { title, body, board, password } = req.body
       const thread = await new Thread({

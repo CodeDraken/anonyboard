@@ -23,19 +23,10 @@ const testThreads = [
 
 // TODO: add replies and link them
 
-const populateThreads = () => {
-  return Thread.remove({})
-    .then(() => Thread.insertMany(testThreads))
-
-  // try {
-  //   await Thread.remove({})
-  //   await Thread.insertMany(testThreads)
-  //   return done()
-  // } catch (err) {
-  //   console.log(err)
-  //   return done(err)
-  // }
-}
+// remove all threads then insert test threads
+const populateThreads = () => Thread
+  .remove({})
+  .then(() => Thread.insertMany(testThreads))
 
 module.exports = {
   testThreads,

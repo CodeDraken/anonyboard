@@ -4,7 +4,6 @@ const expect = require('expect')
 
 const app = require('app')
 const { Thread } = require('models')
-const threadRoutes = require('routes/threadRoutes')
 
 const { testThreads, populateThreads } = require('tests/seed')
 
@@ -22,13 +21,7 @@ const { testThreads, populateThreads } = require('tests/seed')
 //   })
 // })
 
-// beforeAll(() => {
-//   mongoose.connect(mongoTestURI)
-// })
-
 describe('Thread Routes', () => {
-
-
   describe('POST api/threads/:board', () => {
     beforeEach(populateThreads)
 
@@ -47,7 +40,7 @@ describe('Thread Routes', () => {
 
         expect(res.statusCode).toBe(200)
         expect(res.body.title).toBe(thread.title)
-        
+
         const threadDB = await Thread.find(thread)
 
         expect(threadDB.length).toBe(1)
@@ -56,7 +49,5 @@ describe('Thread Routes', () => {
         throw new Error(err)
       }
     })
-
   })
-
 })

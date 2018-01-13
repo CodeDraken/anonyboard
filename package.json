@@ -10,15 +10,13 @@
     "node": "8.9.0",
     "npm": "5.5.1"
   },
-  "jest": {
-    "modulePathIgnorePatterns": [
-      "client/"
-    ],
-    "testEnvironment": "node",
-    "resetModules": true
-  },
   "standard": {
-    "parser": "babel-eslint"
+    "globals": ["$", "jQuery", "fetch"],
+    "ignore": [
+        "node_modules/**"
+    ],
+    "parser": "babel-eslint",
+    "envs": ["jest", "mocha", "node"]
   },
   "scripts": {
     "start": "NODE_PATH=. node index.js",
@@ -28,7 +26,9 @@
     "client": "cd client && yarn start",
     "dev": "concurrently \"yarn start-watch\" \"yarn client\"",
     "lt": "lt -p 5000 -s anonyboardlt000",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "lint": "standard",
+    "lint-fix": "standard --fix"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -39,6 +39,7 @@
     "localtunnel": "^1.8.3",
     "mocha": "^4.1.0",
     "nodemon": "^1.14.10",
+    "standard": "^10.0.3",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
   },
