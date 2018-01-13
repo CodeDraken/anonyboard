@@ -54,7 +54,7 @@ describe('Thread Routes', () => {
   describe('GET api/threads/:board', () => {
     beforeEach(populateThreads)
 
-    it('should list recent threads', async () => {
+    it('lists recent threads', async () => {
       try {
         const res = await request(app).get('/api/threads/test_board')
 
@@ -70,6 +70,16 @@ describe('Thread Routes', () => {
       } catch (err) {
         throw new Error(err)
       }
+    })
+
+    it('returns JSON format', (done) => {
+      request(app)
+        .get('/api/threads/test_board')
+        .expect('Content-Type', /json/)
+        .end((err) => {
+          if (err) throw err
+          done()
+        })
     })
   })
 })
