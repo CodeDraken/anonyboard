@@ -10,13 +10,14 @@ const threadController = require('../controllers/threadController')
 router.route('/:board')
   .all((req, res, next) => {
     const { board } = req.params
-    const { page, limit } = req.query
-    req.boardName = board.toLowerCase()
-    req.page = page || 1
-    req.limit = limit || 50
-    req.skip = page > 1
-      ? page * limit
-      : 0
+    const config = {
+      page: +req.query.page || 1,
+      limit: +req.query.limit || 50,
+      boardName: board.toLowerCase()
+    }
+    config.skip = (config.page - 1) * config.limit
+
+    req.config = config
     next()
   })
   .get(threadController.getThreadsByBoard)

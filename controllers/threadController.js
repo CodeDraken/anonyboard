@@ -5,7 +5,7 @@ const { Thread } = require('models')
 const threadController = {
   async getThreadsByBoard (req, res) {
     try {
-      const { boardName, page, limit, skip } = req
+      const { boardName, page, limit, skip } = req.config
       // get threads by board, sort, and skip for pagination
       const threads = await Thread
         .find(
@@ -14,6 +14,7 @@ const threadController = {
           { sort: { 'createdAt': -1 } }
         )
         .skip(skip)
+        .limit(limit)
 
       res.send({
         page,
@@ -48,7 +49,7 @@ const threadController = {
       const thread = await new Thread({
         title,
         body,
-        board: req.boardName,
+        board: req.config.boardName,
         password
       }).save()
 

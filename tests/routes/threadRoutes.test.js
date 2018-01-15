@@ -7,26 +7,10 @@ const { Thread } = require('models')
 
 const { testThreads, populateThreads } = require('tests/seed')
 
-// describe('app.js', () => {
-//   describe('Test the root path /', () => {
-//     it('should respond to the GET method', async () => {
-//       try {
-//         const res = await request(app).get('/')
-
-//         expect(res.statusCode).toBe(200)
-//       } catch (err) {
-//         throw new Error(err)
-//       }
-//     })
-//   })
-// })
-
 beforeEach(populateThreads)
 
 describe('Thread Routes', () => {
   describe('POST api/threads/:board', () => {
-    // beforeEach(populateThreads)
-
     it('should create a new thread', (done) => {
       const thread = {
         title: 'Test',
@@ -52,9 +36,13 @@ describe('Thread Routes', () => {
   })
 
   describe('GET api/threads/:board', () => {
-    // beforeEach(populateThreads)
+    it('returns JSON format', (done) => {
+      request(app)
+        .get('/api/threads/test_board')
+        .expect('Content-Type', /json/, done)
+    })
 
-    it('returns recent threads', async () => {
+    it('returns threads & they match the model', async () => {
       try {
         const res = await request(app).get('/api/threads/testboard')
 
@@ -82,10 +70,40 @@ describe('Thread Routes', () => {
       }
     })
 
-    it('returns JSON format', (done) => {
-      request(app)
-        .get('/api/threads/test_board')
-        .expect('Content-Type', /json/, done)
+    it('returns page, limit, skip, threads, and boardName', async () => {
+      try {
+        const res = await request(app).get('/api/threads/testboard')
+
+        expect(res.statusCode).toBe(200)
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            page: expect.any(Number),
+            limit: expect.any(Number),
+            skip: expect.any(Number),
+            boardName: 'testboard',
+            threads: expect.any(Array)
+          })
+        )
+      } catch (err) {
+        throw new Error(err)
+      }
+    })
+
+    it('uses page, limit, and skip queries', async () => {
+      try {
+        const page = 2
+        const limit = 1
+        const res = await request(app)
+          .get(`/api/threads/testboard?page=${page}&limit=${limit}`)
+          .expect(200)
+
+        expect(res.body.threads.length).toBe(1)
+        expect(res.body.page).toBe(2)
+        expect(res.body.limit).toBe(1)
+        // expect(res.body)
+      } catch (err) {
+        throw new Error(err)
+      }
     })
   })
 })
