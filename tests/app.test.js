@@ -6,16 +6,22 @@ const expect = require('expect')
 
 const app = require('../app')
 
-after(done => {
-  mongoose.disconnect(done)
-})
+// after(done => {
+//   mongoose.disconnect(done)
+// })
 
 describe('app.js', () => {
   describe('Test the root path /', () => {
-    it('should respond to the GET method', async () => {
+    it('responds to the GET method', async () => {
       const res = await request(app).get('/')
 
       expect(res.statusCode).toBe(200)
+    })
+
+    it('returns HTML format', done => {
+      request(app)
+        .get('/')
+        .expect('Content-Type', /html/, done)
     })
   })
 })

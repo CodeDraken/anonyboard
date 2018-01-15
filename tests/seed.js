@@ -7,7 +7,7 @@ const testThreads = [
   {
     title: 'Test Thread 1',
     body: 'Test Body 1',
-    board: 'Test Board',
+    board: 'testboard',
     password: '123abc',
     _id: new ObjectId()
   },
@@ -15,7 +15,7 @@ const testThreads = [
   {
     title: 'Test Thread 2',
     body: 'Test Body 2',
-    board: 'Test Board',
+    board: 'testboard',
     password: '123abc',
     _id: new ObjectId()
   }

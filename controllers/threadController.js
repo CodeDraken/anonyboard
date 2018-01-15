@@ -4,25 +4,36 @@ const { Thread } = require('models')
 
 const threadController = {
   async getThreadsByBoard (req, res) {
-    const { board } = req.params
     try {
+      const { boardName, page, limit, skip } = req
+      // get threads by board, sort, and skip for pagination
+      const threads = await Thread
+        .find(
+          { board: boardName },
+          {},
+          { sort: { 'createdAt': -1 } }
+        )
+        .skip(skip)
+
       res.send({
-        page: 1,
-        board,
-        threads: []
+        page,
+        limit,
+        threads,
+        skip,
+        boardName
       })
     } catch (err) {
       console.log(err)
-      res.status(500).send('Oops something went wrong!')
+      res.status(500).json({ err })
     }
   },
 
-  async getThreads (req, res) {
-    const { board } = req.params
+  async getRecentThreads (req, res) {
+    // all boards
     try {
       res.send({
         page: 1,
-        board,
+        board: req.boardName,
         threads: []
       })
     } catch (err) {
@@ -32,14 +43,12 @@ const threadController = {
   },
 
   async createThread (req, res) {
-    const { board } = req.params
-
     try {
-      const { title, body, board, password } = req.body
+      const { title, body, password } = req.body
       const thread = await new Thread({
         title,
         body,
-        board,
+        board: req.boardName,
         password
       }).save()
 
