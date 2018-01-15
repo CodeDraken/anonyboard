@@ -62,7 +62,8 @@ describe('Thread Routes', () => {
             bumpedAt: expect.any(String),
             createdAt: expect.any(String),
             replyCount: expect.any(Number),
-            votes: expect.any(Number)
+            votes: expect.any(Number),
+            reports: expect.any(Number)
           })
         )
       } catch (err) {
@@ -101,6 +102,53 @@ describe('Thread Routes', () => {
         expect(res.body.page).toBe(2)
         expect(res.body.limit).toBe(1)
         // expect(res.body)
+      } catch (err) {
+        throw new Error(err)
+      }
+    })
+  })
+
+  describe('PATCH api/threads/:board', () => {
+    it('increments reports when receives type === "report"', async () => {
+      try {
+        const update = { type: 'report', id: testThreads[0]._id }
+        const res = await request(app)
+          .patch('/api/threads/testboard')
+          .send(update)
+          .expect(200)
+
+        expect(res.body.reports).toBeDefined()
+        expect(res.body.reports).toBe(1)
+      } catch (err) {
+        throw new Error(err)
+      }
+    })
+
+    it('increments reports when receives type === "increment"', async () => {
+      try {
+        const update = { type: 'increment', id: testThreads[0]._id }
+        const res = await request(app)
+          .patch('/api/threads/testboard')
+          .send(update)
+          .expect(200)
+
+        expect(res.body.votes).toBeDefined()
+        expect(res.body.votes).toBe(1)
+      } catch (err) {
+        throw new Error(err)
+      }
+    })
+
+    it('decrements reports when receives type === "decrement"', async () => {
+      try {
+        const update = { type: 'decrement', id: testThreads[0]._id }
+        const res = await request(app)
+          .patch('/api/threads/testboard')
+          .send(update)
+          .expect(200)
+
+        expect(res.body.votes).toBeDefined()
+        expect(res.body.votes).toBe(-1)
       } catch (err) {
         throw new Error(err)
       }

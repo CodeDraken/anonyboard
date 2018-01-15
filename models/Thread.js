@@ -10,6 +10,7 @@ const threadSchema = new Schema({
   password: { type: String, required: true },
   replyCount: { type: Number, default: 0 },
   votes: { type: Number, default: 0 },
+  reports: { type: Number, default: 0 },
 
   _replies: [{ type: Schema.ObjectId, ref: 'Reply' }],
   createdAt: { type: Date, default: Date.now() },

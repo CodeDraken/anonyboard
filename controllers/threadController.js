@@ -60,14 +60,9 @@ const threadController = {
     }
   },
 
-  async reportThread (req, res) {
-    const { board } = req.params
+  async rateThread (req, res) {
     try {
-      res.send({
-        page: 1,
-        board,
-        threads: []
-      })
+      res.send('update')
     } catch (err) {
       console.log(err)
       res.status(500).send('Oops something went wrong!')

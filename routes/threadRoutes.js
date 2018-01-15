@@ -22,7 +22,7 @@ router.route('/:board')
   })
   .get(threadController.getThreadsByBoard)
   .post(threadController.createThread)
-  .put(threadController.reportThread)
+  .patch(threadController.rateThread)
   .delete(threadController.deleteThread)
 
 module.exports = router
