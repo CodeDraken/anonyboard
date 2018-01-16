@@ -5,7 +5,7 @@ const expect = require('expect')
 const app = require('app')
 const { Thread } = require('models')
 
-const { testThreads, populateThreads } = require('tests/seed')
+const { testThreads, populateThreads } = require('util/seed')
 
 beforeEach(populateThreads)
 
@@ -124,9 +124,9 @@ describe('Thread Routes', () => {
       }
     })
 
-    it('increments reports when receives type === "increment"', async () => {
+    it('increments reports when receives type === "upvote"', async () => {
       try {
-        const update = { type: 'increment', id: testThreads[0]._id }
+        const update = { type: 'upvote', id: testThreads[0]._id }
         const res = await request(app)
           .patch('/api/threads/testboard')
           .send(update)
@@ -139,9 +139,9 @@ describe('Thread Routes', () => {
       }
     })
 
-    it('decrements reports when receives type === "decrement"', async () => {
+    it('decrements reports when receives type === "downvote"', async () => {
       try {
-        const update = { type: 'decrement', id: testThreads[0]._id }
+        const update = { type: 'downvote', id: testThreads[0]._id }
         const res = await request(app)
           .patch('/api/threads/testboard')
           .send(update)

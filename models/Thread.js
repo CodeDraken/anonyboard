@@ -17,4 +17,28 @@ const threadSchema = new Schema({
   bumpedAt: { type: Date, default: Date.now() }
 })
 
+// INSTANCE METHODS
+threadSchema.methods.upvote = async function () {
+  const thread = this
+  thread.votes++
+
+  return thread.save()
+}
+
+threadSchema.methods.downvote = async function () {
+  const thread = this
+  thread.votes--
+
+  return thread.save()
+}
+
+threadSchema.methods.report = async function () {
+  const thread = this
+  thread.reports++
+
+  return thread.save()
+}
+
+// STATICS
+
 module.exports = mongoose.model('Thread', threadSchema)

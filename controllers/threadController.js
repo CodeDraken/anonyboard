@@ -1,6 +1,7 @@
 // threadController - handles all thread related actions
 
 const { Thread } = require('models')
+const { getRatingAction } = require('util/threadUtil')
 
 const threadController = {
   async getThreadsByBoard (req, res) {
@@ -62,7 +63,15 @@ const threadController = {
 
   async rateThread (req, res) {
     try {
-      res.send('update')
+      const { type, id } = req.body
+      const action = getRatingAction(type)
+
+      if (!action) return res.status(400).send({ error: 'Invalid rating type!' })
+
+      const thread = await Thread.findById(id)
+      const updated = await thread[action]()
+
+      res.json(updated)
     } catch (err) {
       console.log(err)
       res.status(500).send('Oops something went wrong!')
