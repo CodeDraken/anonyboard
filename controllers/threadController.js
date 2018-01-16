@@ -79,13 +79,18 @@ const threadController = {
   },
 
   async deleteThread (req, res) {
-    const { board } = req.params
     try {
-      res.send({
-        page: 1,
-        board,
-        threads: []
-      })
+      const { id, password } = req.body
+      const thread = await Thread.findById(id)
+      const isCorrectPassword = await thread.comparePassword(password)
+
+      if (isCorrectPassword) {
+        const deleted = await thread.remove()
+
+        return res.json(deleted)
+      } else {
+        return res.status(401).json({ error: 'Invalid password!' })
+      }
     } catch (err) {
       console.log(err)
       res.status(500).send('Oops something went wrong!')

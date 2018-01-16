@@ -26,7 +26,12 @@ const testThreads = [
 // remove all threads then insert test threads
 const populateThreads = () => Thread
   .remove({})
-  .then(() => Thread.insertMany(testThreads))
+  .then(() => {
+    const threadOne = new Thread(testThreads[0]).save()
+    const threadTwo = new Thread(testThreads[1]).save()
+
+    return Promise.all([ threadOne, threadTwo ])
+  })
 
 module.exports = {
   testThreads,

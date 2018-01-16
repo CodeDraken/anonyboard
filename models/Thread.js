@@ -45,7 +45,7 @@ threadSchema.methods.report = async function () {
 }
 
 threadSchema.methods.comparePassword = async function (password) {
-  return bcrypt.compare(this.password, password)
+  return bcrypt.compare(password, this.password)
 }
 
 // STATICS

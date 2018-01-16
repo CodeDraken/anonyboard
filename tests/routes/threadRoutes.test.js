@@ -10,7 +10,7 @@ const { testThreads, populateThreads } = require('util/seed')
 beforeEach(populateThreads)
 
 describe('Thread Routes', () => {
-  describe('POST api/threads/:board', () => {
+  describe('POST /api/threads/:board', () => {
     it('should create a new thread', (done) => {
       const thread = {
         title: 'Test',
@@ -36,7 +36,7 @@ describe('Thread Routes', () => {
     })
   })
 
-  describe('GET api/threads/:board', () => {
+  describe('GET /api/threads/:board', () => {
     it('returns JSON format', (done) => {
       request(app)
         .get('/api/threads/test_board')
@@ -68,7 +68,7 @@ describe('Thread Routes', () => {
           })
         )
       } catch (err) {
-        throw new Error(err)
+        throw err
       }
     })
 
@@ -87,7 +87,7 @@ describe('Thread Routes', () => {
           })
         )
       } catch (err) {
-        throw new Error(err)
+        throw err
       }
     })
 
@@ -104,12 +104,12 @@ describe('Thread Routes', () => {
         expect(res.body.limit).toBe(1)
         // expect(res.body)
       } catch (err) {
-        throw new Error(err)
+        throw err
       }
     })
   })
 
-  describe('PATCH api/threads/:board', () => {
+  describe('PATCH /api/threads/:board', () => {
     it('increments reports when receives type === "report"', async () => {
       try {
         const update = { type: 'report', id: testThreads[0]._id }
@@ -121,7 +121,7 @@ describe('Thread Routes', () => {
         expect(res.body.reports).toBeDefined()
         expect(res.body.reports).toBe(1)
       } catch (err) {
-        throw new Error(err)
+        throw err
       }
     })
 
@@ -136,7 +136,7 @@ describe('Thread Routes', () => {
         expect(res.body.votes).toBeDefined()
         expect(res.body.votes).toBe(1)
       } catch (err) {
-        throw new Error(err)
+        throw err
       }
     })
 
@@ -151,7 +151,7 @@ describe('Thread Routes', () => {
         expect(res.body.votes).toBeDefined()
         expect(res.body.votes).toBe(-1)
       } catch (err) {
-        throw new Error(err)
+        throw err
       }
     })
 
@@ -163,6 +163,27 @@ describe('Thread Routes', () => {
         .send(invalidUpdate)
         .expect(400)
         .end(done)
+    })
+  })
+
+  describe('DELETE /api/threads/:board', () => {
+    it('deletes a thread when given the correct password', async () => {
+      const delRequest = {
+        id: testThreads[0]._id,
+        password: testThreads[0].password
+      }
+
+      const res = await request(app)
+        .delete('/api/threads/testboard')
+        .send(delRequest)
+        .expect(200)
+
+      expect(Object.keys(res.body))
+        .toEqual(expect.arrayContaining(Object.keys(testThreads[0])))
+
+      const threadDB = await Thread.findById(testThreads[0]._id)
+
+      expect(threadDB).toBeNull()
     })
   })
 })
