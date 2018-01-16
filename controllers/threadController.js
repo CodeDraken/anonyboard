@@ -62,6 +62,7 @@ const threadController = {
   },
 
   async rateThread (req, res) {
+    // rate, report, or update
     try {
       const { type, id } = req.body
       const action = getRatingAction(type)
@@ -69,7 +70,7 @@ const threadController = {
       if (!action) return res.status(400).send({ error: 'Invalid rating type!' })
 
       const thread = await Thread.findById(id)
-      const updated = await thread[action]()
+      const updated = await thread[action]({ ...req.body, type: action })
 
       res.json(updated)
     } catch (err) {

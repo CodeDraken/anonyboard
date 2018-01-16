@@ -44,6 +44,15 @@ threadSchema.methods.report = async function () {
   return thread.save()
 }
 
+threadSchema.methods.updateTitleBody = async function ({ title, body }) {
+  let thread = this
+
+  thread.title = title || thread.title
+  thread.body = body || thread.body
+
+  return thread.save()
+}
+
 threadSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password)
 }

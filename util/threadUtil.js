@@ -6,6 +6,8 @@ const getRatingAction = type => {
       return 'upvote'
     case 'downvote':
       return 'downvote'
+    case 'update':
+      return 'updateTitleBody'
     default:
       return null
   }

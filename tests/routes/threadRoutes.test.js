@@ -164,6 +164,27 @@ describe('Thread Routes', () => {
         .expect(400)
         .end(done)
     })
+
+    it('updates the thread when receives type === "update"', async () => {
+      try {
+        const update = {
+          type: 'update',
+          id: testThreads[0]._id,
+          title: 'Updated title',
+          body: 'Updated body'
+        }
+
+        const res = await request(app)
+          .patch('/api/threads/testboard')
+          .send(update)
+          .expect(200)
+
+        expect(res.body.title).toBe(update.title)
+        expect(res.body.body).toBe(update.body)
+      } catch (err) {
+        throw err
+      }
+    })
   })
 
   describe('DELETE /api/threads/:board', () => {
