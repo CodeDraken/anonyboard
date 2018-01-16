@@ -1,7 +1,7 @@
 // seed.js - reset & seed the database for testing ( dont use on prod db )
 const { ObjectId } = require('mongodb')
 
-const { Thread } = require('models')
+const { Thread, Reply } = require('models')
 
 const testThreads = [
   {
@@ -9,6 +9,7 @@ const testThreads = [
     body: 'Test Body 1',
     board: 'testboard',
     password: '123abc',
+    // _replies: [ testReplies[0]._id, testReplies[1]._id ],
     _id: new ObjectId()
   },
 
@@ -21,7 +22,26 @@ const testThreads = [
   }
 ]
 
-// TODO: add replies and link them
+const testReplies = [
+  {
+    body: 'Test reply 1',
+    password: '123abc',
+    _id: new ObjectId(),
+    thread: testThreads[0]._id
+  },
+  {
+    body: 'Test reply 2',
+    password: '123abc',
+    _id: new ObjectId(),
+    thread: testThreads[0]._id
+  },
+  {
+    body: 'Test reply 3',
+    password: '123abc',
+    _id: new ObjectId(),
+    thread: testThreads[1]._id
+  }
+]
 
 // remove all threads then insert test threads
 const populateThreads = () => Thread
@@ -33,7 +53,19 @@ const populateThreads = () => Thread
     return Promise.all([ threadOne, threadTwo ])
   })
 
+// remove all replies then insert test replies
+const populateReplies = () => Reply
+  .remove({})
+  .then(() => {
+    const replyOne = new Reply(testReplies[0]).save()
+    const replyTwo = new Reply(testReplies[1]).save()
+    const replyThree = new Reply(testReplies[2]).save()
+
+    return Promise.all([ replyOne, replyTwo, replyThree ])
+  })
+
 module.exports = {
   testThreads,
-  populateThreads
+  populateThreads,
+  populateReplies
 }

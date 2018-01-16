@@ -17,7 +17,7 @@ const threadSchema = new Schema({
   votes: { type: Number, default: 0 },
   reports: { type: Number, default: 0 },
 
-  _replies: [{ type: Schema.ObjectId, ref: 'Reply' }],
+  // _replies: [{ type: Schema.ObjectId, ref: 'Reply' }],
   createdAt: { type: Date, default: Date.now() },
   bumpedAt: { type: Date, default: Date.now() }
 })

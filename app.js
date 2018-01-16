@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const threadRoutes = require('./routes/threadRoutes')
+const replyRoutes = require('./routes/replyRoutes')
 
 const { mongoose } = require('db/mongoose')
 
@@ -12,6 +13,7 @@ app.use(bodyParser.json())
 
 // routes
 app.use('/api/threads', threadRoutes)
+app.use('/api/replies', replyRoutes)
 
 // production server
 if (process.env.NODE_ENV === 'production') {

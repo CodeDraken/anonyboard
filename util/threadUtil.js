@@ -1,4 +1,4 @@
-const getRatingAction = type => {
+const getUpdateAction = type => {
   switch (type) {
     case 'report':
       return 'report'
@@ -14,5 +14,5 @@ const getRatingAction = type => {
 }
 
 module.exports = {
-  getRatingAction
+  getUpdateAction
 }

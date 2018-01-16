@@ -5,9 +5,10 @@ const expect = require('expect')
 const app = require('app')
 const { Thread } = require('models')
 
-const { testThreads, populateThreads } = require('util/seed')
+const { testThreads, populateThreads, populateReplies } = require('util/seed')
 
 beforeEach(populateThreads)
+beforeEach(populateReplies)
 
 describe('Thread Routes', () => {
   describe('POST /api/threads/:board', () => {
@@ -59,7 +60,7 @@ describe('Thread Routes', () => {
           expect.objectContaining({
             ...testThread,
             __v: expect.any(Number),
-            _replies: expect.any(Array),
+            // _replies: expect.any(Array),
             bumpedAt: expect.any(String),
             createdAt: expect.any(String),
             replyCount: expect.any(Number),
