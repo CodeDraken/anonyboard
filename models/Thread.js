@@ -2,7 +2,9 @@
 
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-const bcrypt = require('bcryptjs')
+
+const { voteReport } = require('models/sharedMethods/rating')
+const { hashPass, comparePassword } = require('models/sharedStatics/password')
 
 const threadSchema = new Schema({
   title: { type: String, required: true },
@@ -23,57 +25,31 @@ const threadSchema = new Schema({
 })
 
 // INSTANCE METHODS
-threadSchema.methods.upvote = async function () {
-  const thread = this
-  thread.votes++
 
-  return thread.save()
-}
+threadSchema.methods = {
+  ...threadSchema.methods,
+  ...voteReport,
 
-threadSchema.methods.downvote = async function () {
-  const thread = this
-  thread.votes--
+  comparePassword: function (password) {
+    return comparePassword(password, this)
+  },
 
-  return thread.save()
-}
+  updateTitleBody: async function ({ title, body }) {
+    let thread = this
 
-threadSchema.methods.report = async function () {
-  const thread = this
-  thread.reports++
+    thread.title = title || thread.title
+    thread.body = body || thread.body
 
-  return thread.save()
-}
-
-threadSchema.methods.updateTitleBody = async function ({ title, body }) {
-  let thread = this
-
-  thread.title = title || thread.title
-  thread.body = body || thread.body
-
-  return thread.save()
-}
-
-threadSchema.methods.comparePassword = async function (password) {
-  return bcrypt.compare(password, this.password)
+    return thread.save()
+  }
 }
 
 // STATICS
 
 // HOOKS
 threadSchema.pre('save', async function (next) {
-  try {
-    const thread = this
-
-    if (thread.isModified('password')) {
-      const hash = await bcrypt.hash(thread.password, 10)
-      thread.password = hash
-      return next()
-    }
-
-    return next()
-  } catch (err) {
-    throw err
-  }
+  await hashPass(this)
+  next()
 })
 
 module.exports = mongoose.model('Thread', threadSchema)

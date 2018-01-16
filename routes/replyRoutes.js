@@ -1,5 +1,5 @@
 // replyRoutes - reply API routes
-// all routes are (api/replies)/:board?reply_id
+// all routes are (api/replies)/:board/:id
 
 // TODO: update this to replies
 

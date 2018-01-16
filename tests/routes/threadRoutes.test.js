@@ -5,7 +5,7 @@ const expect = require('expect')
 const app = require('app')
 const { Thread } = require('models')
 
-const { testThreads, populateThreads, populateReplies } = require('util/seed')
+const { testThreads, testReplies, populateThreads, populateReplies } = require('util/seed')
 
 beforeEach(populateThreads)
 beforeEach(populateReplies)
