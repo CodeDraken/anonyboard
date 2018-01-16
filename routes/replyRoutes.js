@@ -9,14 +9,14 @@ const router = express.Router()
 const replyController = require('../controllers/replyController')
 
 // get replys on a specific board
-router.route('/:board/:id')
+router.route('/:board/:thread')
   .all((req, res, next) => {
-    const { board, id } = req.params
+    const { board, thread } = req.params
     const config = {
       page: +req.query.page || 1,
       limit: +req.query.limit || 50,
       boardName: board.toLowerCase(),
-      threadId: id
+      thread
     }
     config.skip = (config.page - 1) * config.limit
 

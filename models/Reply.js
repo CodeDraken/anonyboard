@@ -29,8 +29,12 @@ replySchema.methods = {
   ...replySchema.methods,
   ...voteReport,
 
-  comparePassword: function (password) {
-    return comparePassword(password, this)
+  comparePassword: async function (password) {
+    const hashedPassword = await mongoose.model('Thread')
+      .findById(this.id)
+      .select('password')
+
+    return comparePassword(password, hashedPassword.password)
   },
 
   updateBody: async function ({ body }) {

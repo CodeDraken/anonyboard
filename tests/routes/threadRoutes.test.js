@@ -12,7 +12,7 @@ beforeEach(populateReplies)
 
 describe('Thread Routes', () => {
   describe('POST /api/threads/:board', () => {
-    it('should create a new thread', (done) => {
+    it('create a new thread', (done) => {
       const thread = {
         title: 'Test',
         body: 'Hot',
@@ -21,7 +21,7 @@ describe('Thread Routes', () => {
       }
 
       request(app)
-          .post('/api/threads/test_board')
+          .post('/api/threads/testboard')
           .send(thread)
           .expect(200)
           .expect('Content-Type', /json/)
@@ -30,7 +30,7 @@ describe('Thread Routes', () => {
             const threadDB = await Thread.findById(res.body._id)
 
             expect(threadDB.title).toBe(thread.title)
-            expect(threadDB.password).not.toBe(thread.password)
+            expect(threadDB.password).not.toBeDefined()
             done()
           })
           .catch(err => done(err))
@@ -40,7 +40,7 @@ describe('Thread Routes', () => {
   describe('GET /api/threads/:board', () => {
     it('returns JSON format', (done) => {
       request(app)
-        .get('/api/threads/test_board')
+        .get('/api/threads/testboard')
         .expect('Content-Type', /json/, done)
     })
 
@@ -68,6 +68,18 @@ describe('Thread Routes', () => {
             reports: expect.any(Number)
           })
         )
+      } catch (err) {
+        throw err
+      }
+    })
+
+    it('the threads dont include the password', async () => {
+      try {
+        const res = await request(app).get('/api/threads/testboard')
+
+        expect(res.statusCode).toBe(200)
+        expect(res.body.threads).toBeDefined()
+        expect(res.body.threads[0].password).not.toBeDefined()
       } catch (err) {
         throw err
       }
@@ -201,7 +213,7 @@ describe('Thread Routes', () => {
         .expect(200)
 
       expect(Object.keys(res.body))
-        .toEqual(expect.arrayContaining(Object.keys(testThreads[0])))
+        .toEqual(expect.arrayContaining([ '_id', 'body', 'title' ]))
 
       const threadDB = await Thread.findById(testThreads[0]._id)
 

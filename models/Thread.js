@@ -13,7 +13,8 @@ const threadSchema = new Schema({
   password: {
     type: String,
     required: true,
-    minlength: 6
+    minlength: 6,
+    select: false
   },
   replyCount: { type: Number, default: 0 },
   votes: { type: Number, default: 0 },
@@ -30,8 +31,12 @@ threadSchema.methods = {
   ...threadSchema.methods,
   ...voteReport,
 
-  comparePassword: function (password) {
-    return comparePassword(password, this)
+  comparePassword: async function (password) {
+    const hashedPassword = await mongoose.model('Thread')
+      .findById(this.id)
+      .select('password')
+
+    return comparePassword(password, hashedPassword.password)
   },
 
   updateTitleBody: async function ({ title, body }) {

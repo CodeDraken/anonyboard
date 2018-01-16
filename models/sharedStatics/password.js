@@ -12,8 +12,8 @@ const hashPass = async function (doc, passKey = 'password') {
   }
 }
 
-const comparePassword = async function (password, doc, passKey = 'password') {
-  return bcrypt.compare(password, doc[passKey])
+const comparePassword = async function (password, hashedPass) {
+  return bcrypt.compare(password, hashedPass)
 }
 
 module.exports = {
