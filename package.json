@@ -11,12 +11,20 @@
     "npm": "5.5.1"
   },
   "standard": {
-    "globals": ["$", "jQuery", "fetch"],
+    "globals": [
+      "$",
+      "jQuery",
+      "fetch"
+    ],
     "ignore": [
-        "node_modules/**"
+      "node_modules/**"
     ],
     "parser": "babel-eslint",
-    "envs": ["jest", "mocha", "node"]
+    "envs": [
+      "jest",
+      "mocha",
+      "node"
+    ]
   },
   "scripts": {
     "start": "NODE_PATH=. node index.js",
@@ -45,6 +53,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mongodb": "^3.0.1",

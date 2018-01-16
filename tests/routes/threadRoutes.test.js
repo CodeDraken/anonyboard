@@ -26,12 +26,13 @@ describe('Thread Routes', () => {
           .expect('Content-Type', /json/)
           .then(async res => {
             expect(res.body.title).toBe(thread.title)
-            const threadDB = await Thread.find(thread)
+            const threadDB = await Thread.findById(res.body._id)
 
-            expect(threadDB.length).toBe(1)
-            expect(threadDB[0].body).toBe(thread.body)
+            expect(threadDB.title).toBe(thread.title)
+            expect(threadDB.password).not.toBe(thread.password)
             done()
-          }).catch(err => done(err))
+          })
+          .catch(err => done(err))
     })
   })
 
@@ -152,6 +153,16 @@ describe('Thread Routes', () => {
       } catch (err) {
         throw new Error(err)
       }
+    })
+
+    it('returns an error if request is an invalid type', (done) => {
+      const invalidUpdate = { type: 'hackyourcode', id: testThreads[0]._id }
+
+      request(app)
+        .patch('/api/threads/testboard')
+        .send(invalidUpdate)
+        .expect(400)
+        .end(done)
     })
   })
 })
