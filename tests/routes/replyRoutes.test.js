@@ -39,6 +39,14 @@ describe('Reply Routes', () => {
   })
 
   describe('GET /api/replies/:board/:id', () => {
+    it('returns JSON format', () => {
+
+    })
+
+    it('returns replies that match the model', () => {
+
+    })
+
     it('does not include the passwords', async () => {
       try {
         const res = await request(app).get(`/api/replies/testboard/${testThreads[0]._id}`)
