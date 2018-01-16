@@ -30,7 +30,6 @@ describe('Thread Routes', () => {
             const threadDB = await Thread.findById(res.body._id)
 
             expect(threadDB.title).toBe(thread.title)
-            expect(threadDB.password).not.toBeDefined()
             done()
           })
           .catch(err => done(err))
@@ -73,7 +72,7 @@ describe('Thread Routes', () => {
       }
     })
 
-    it('the threads dont include the password', async () => {
+    it('does not include the passwords', async () => {
       try {
         const res = await request(app).get('/api/threads/testboard')
 

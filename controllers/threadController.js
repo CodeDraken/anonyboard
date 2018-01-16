@@ -54,7 +54,7 @@ const threadController = {
         password
       }).save()
 
-      return res.send(thread)
+      return res.json(thread)
     } catch (err) {
       console.log(err)
       res.status(500).send('Oops something went wrong!')

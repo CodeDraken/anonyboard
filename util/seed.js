@@ -10,7 +10,9 @@ const testThreads = [
     board: 'testboard',
     password: '123abc',
     // _replies: [ testReplies[0]._id, testReplies[1]._id ],
-    _id: new ObjectId()
+    _id: new ObjectId(),
+    bumpedAt: Date.now(),
+    createdAt: Date.now()
   },
 
   {
@@ -18,7 +20,9 @@ const testThreads = [
     body: 'Test Body 2',
     board: 'testboard',
     password: '123abc',
-    _id: new ObjectId()
+    _id: new ObjectId(),
+    bumpedAt: Date.now(),
+    createdAt: Date.now()
   }
 ]
 

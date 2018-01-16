@@ -1,11 +1,11 @@
 // replyController - handles all reply related actions
 
-const { Reply } = require('models')
+const { Reply, Thread } = require('models')
 
 const replyController = {
   async getReplies (req, res) {
     try {
-      const { page, limit, skip } = req.config
+      const { page, limit, skip, thread } = req.config
     } catch (err) {
       console.log(err)
       res.status(500).json({ error: err })
@@ -13,15 +13,31 @@ const replyController = {
   },
 
   async createReply (req, res) {
+    try {
+      const { threadId } = req.config
+      const { body, password } = req.body
+      const reply = await new Reply({
+        body,
+        password,
+        thread: threadId
+      }).save()
 
+      const thread = await Thread.findById(threadId)
+      thread.set({ bumpedAt: Date.now() }).save()
+
+      return res.json(reply)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ error: err })
+    }
   },
 
   async updateReply (req, res) {
-
+    const { page, limit, skip, thread } = req.config
   },
 
   async deleteReply (req, res) {
-
+    const { page, limit, skip, thread } = req.config
   }
 }
 

@@ -12,7 +12,8 @@ const replySchema = new Schema({
   password: {
     type: String,
     required: true,
-    minlength: 6
+    minlength: 6,
+    select: false
   },
   votes: { type: Number, default: 0 },
   reports: { type: Number, default: 0 },

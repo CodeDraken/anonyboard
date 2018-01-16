@@ -16,7 +16,7 @@ router.route('/:board/:thread')
       page: +req.query.page || 1,
       limit: +req.query.limit || 50,
       boardName: board.toLowerCase(),
-      thread
+      threadId: thread
     }
     config.skip = (config.page - 1) * config.limit
 
