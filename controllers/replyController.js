@@ -68,7 +68,25 @@ const replyController = {
   },
 
   async deleteReply (req, res) {
-    const { page, limit, skip, threadId } = req.config
+    try {
+      const { id, password } = req.body
+      const reply = await Reply.findById(id)
+
+      if (!reply) return res.status(404).json({ error: 'Reply not found!' })
+
+      const isCorrectPassword = await reply.comparePassword(password)
+
+      if (isCorrectPassword) {
+        const deleted = await reply.remove()
+
+        return res.json(deleted)
+      } else {
+        return res.status(401).json({ error: 'Invalid password!' })
+      }
+    } catch (err) {
+      console.log(err)
+      res.status(500).send('Oops something went wrong!')
+    }
   }
 }
 

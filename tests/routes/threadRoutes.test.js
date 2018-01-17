@@ -214,7 +214,7 @@ describe('Thread Routes', () => {
       expect(Object.keys(res.body))
         .toEqual(expect.arrayContaining([ '_id', 'body', 'title' ]))
 
-      const threadDB = await Thread.findById(testThreads[0]._id)
+      const threadDB = await Thread.findById(delRequest.id)
 
       expect(threadDB).toBeNull()
     })

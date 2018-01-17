@@ -88,7 +88,7 @@ describe('Reply Routes', () => {
       try {
         const update = { type: 'report', id: testReplies[0]._id }
         const res = await request(app)
-          .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+          .patch(`/api/replies/testboard/${testThreads[0]._id}`)
           .send(update)
           .expect(200)
 
@@ -103,7 +103,7 @@ describe('Reply Routes', () => {
       try {
         const update = { type: 'upvote', id: testReplies[0]._id }
         const res = await request(app)
-          .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+          .patch(`/api/replies/testboard/${testThreads[0]._id}`)
           .send(update)
           .expect(200)
 
@@ -118,7 +118,7 @@ describe('Reply Routes', () => {
       try {
         const update = { type: 'downvote', id: testReplies[0]._id }
         const res = await request(app)
-          .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+          .patch(`/api/replies/testboard/${testThreads[0]._id}`)
           .send(update)
           .expect(200)
 
@@ -133,13 +133,13 @@ describe('Reply Routes', () => {
       const invalidUpdate = { type: 'hackyourcode', id: testReplies[0]._id }
 
       request(app)
-        .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+        .patch(`/api/replies/testboard/${testThreads[0]._id}`)
         .send(invalidUpdate)
         .expect(400)
         .end(done)
     })
 
-    it('updates the thread when receives type === "update"', async () => {
+    it('updates the reply body when receives type === "update"', async () => {
       try {
         const update = {
           type: 'update',
@@ -148,7 +148,7 @@ describe('Reply Routes', () => {
         }
 
         const res = await request(app)
-          .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+          .patch(`/api/replies/testboard/${testThreads[0]._id}`)
           .send(update)
           .expect(200)
 
@@ -156,6 +156,27 @@ describe('Reply Routes', () => {
       } catch (err) {
         throw err
       }
+    })
+  })
+
+  describe('DELETE /api/replies/:board/:thread', () => {
+    it('deletes a reply when given the correct password', async () => {
+      const delRequest = {
+        id: testReplies[0]._id,
+        password: testReplies[0].password
+      }
+
+      const res = await request(app)
+        .delete(`/api/replies/testboard/${testThreads[0]._id}`)
+        .send(delRequest)
+        .expect(200)
+
+      expect(Object.keys(res.body))
+        .toEqual(expect.arrayContaining([ '_id', 'body' ]))
+
+      const replyDB = await Reply.findById(delRequest.id)
+
+      expect(replyDB).toBeNull()
     })
   })
 })

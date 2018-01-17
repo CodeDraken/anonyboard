@@ -31,7 +31,7 @@ replySchema.methods = {
   ...voteReport,
 
   comparePassword: async function (password) {
-    const hashedPassword = await mongoose.model('Thread')
+    const hashedPassword = await mongoose.model('Reply')
       .findById(this.id)
       .select('password')
 
