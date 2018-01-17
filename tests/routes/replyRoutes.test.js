@@ -82,4 +82,80 @@ describe('Reply Routes', () => {
       }
     })
   })
+
+  describe('PATCH /api/replies/:board/:thread', () => {
+    it('increments reports when receives type === "report"', async () => {
+      try {
+        const update = { type: 'report', id: testReplies[0]._id }
+        const res = await request(app)
+          .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+          .send(update)
+          .expect(200)
+
+        expect(res.body.reports).toBeDefined()
+        expect(res.body.reports).toBe(1)
+      } catch (err) {
+        throw err
+      }
+    })
+
+    it('increments reports when receives type === "upvote"', async () => {
+      try {
+        const update = { type: 'upvote', id: testReplies[0]._id }
+        const res = await request(app)
+          .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+          .send(update)
+          .expect(200)
+
+        expect(res.body.votes).toBeDefined()
+        expect(res.body.votes).toBe(1)
+      } catch (err) {
+        throw err
+      }
+    })
+
+    it('decrements reports when receives type === "downvote"', async () => {
+      try {
+        const update = { type: 'downvote', id: testReplies[0]._id }
+        const res = await request(app)
+          .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+          .send(update)
+          .expect(200)
+
+        expect(res.body.votes).toBeDefined()
+        expect(res.body.votes).toBe(-1)
+      } catch (err) {
+        throw err
+      }
+    })
+
+    it('returns an error if request is an invalid type', (done) => {
+      const invalidUpdate = { type: 'hackyourcode', id: testReplies[0]._id }
+
+      request(app)
+        .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+        .send(invalidUpdate)
+        .expect(400)
+        .end(done)
+    })
+
+    it('updates the thread when receives type === "update"', async () => {
+      try {
+        const update = {
+          type: 'update',
+          id: testReplies[0]._id,
+          body: 'Updated body'
+        }
+
+        const res = await request(app)
+          .patch(`/api/replies/testboard/${testReplies[0]._id}`)
+          .send(update)
+          .expect(200)
+
+        expect(res.body.body).toBe(update.body)
+      } catch (err) {
+        throw err
+      }
+    })
+  })
 })

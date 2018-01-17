@@ -1,6 +1,7 @@
 // replyController - handles all reply related actions
 
 const { Reply, Thread } = require('models')
+const { getUpdateAction } = require('util/threadUtil')
 
 const replyController = {
   async getReplies (req, res) {
@@ -48,7 +49,22 @@ const replyController = {
   },
 
   async updateReply (req, res) {
-    const { page, limit, skip, threadId } = req.config
+    // rate, report, or update
+    try {
+      const { page, limit, skip, threadId } = req.config
+      const { type, body, id } = req.body
+      const action = getUpdateAction(type)
+
+      if (!action) return res.status(400).send({ error: 'Invalid rating type!' })
+
+      const reply = await Reply.findById(id)
+      const updated = await reply[action]({ ...req.body, type: action })
+
+      res.json(updated)
+    } catch (err) {
+      console.log(err)
+      res.status(500).send('Oops something went wrong!')
+    }
   },
 
   async deleteReply (req, res) {

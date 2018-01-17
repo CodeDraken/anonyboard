@@ -38,7 +38,7 @@ replySchema.methods = {
     return comparePassword(password, hashedPassword.password)
   },
 
-  updateBody: async function ({ body }) {
+  updateTitleBody: async function ({ body }) {
     let reply = this
 
     reply.body = body || reply.body
