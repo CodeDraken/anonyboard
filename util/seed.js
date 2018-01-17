@@ -70,6 +70,7 @@ const populateReplies = () => Reply
 
 module.exports = {
   testThreads,
+  testReplies,
   populateThreads,
   populateReplies
 }

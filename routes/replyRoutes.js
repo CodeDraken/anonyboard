@@ -14,7 +14,7 @@ router.route('/:board/:thread')
     const { board, thread } = req.params
     const config = {
       page: +req.query.page || 1,
-      limit: +req.query.limit || 50,
+      limit: +req.query.limit || 25,
       boardName: board.toLowerCase(),
       threadId: thread
     }

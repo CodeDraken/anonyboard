@@ -5,7 +5,22 @@ const { Reply, Thread } = require('models')
 const replyController = {
   async getReplies (req, res) {
     try {
-      const { page, limit, skip, thread } = req.config
+      const { page, limit, skip, threadId } = req.config
+      const replies = await Reply
+        .find(
+          { thread: threadId }, {},
+          { sort: { 'createdAt': 1 } }
+        )
+        .skip(skip)
+        .limit(limit)
+
+      res.json({
+        page,
+        limit,
+        replies,
+        skip,
+        threadId
+      })
     } catch (err) {
       console.log(err)
       res.status(500).json({ error: err })
@@ -33,11 +48,11 @@ const replyController = {
   },
 
   async updateReply (req, res) {
-    const { page, limit, skip, thread } = req.config
+    const { page, limit, skip, threadId } = req.config
   },
 
   async deleteReply (req, res) {
-    const { page, limit, skip, thread } = req.config
+    const { page, limit, skip, threadId } = req.config
   }
 }
 
