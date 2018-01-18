@@ -51,8 +51,7 @@ const replyController = {
   async updateReply (req, res) {
     // rate, report, or update
     try {
-      const { page, limit, skip, threadId } = req.config
-      const { type, body, id } = req.body
+      const { type, id } = req.body
       const action = getUpdateAction(type)
 
       if (!action) return res.status(400).send({ error: 'Invalid rating type!' })

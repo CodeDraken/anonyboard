@@ -1,8 +1,6 @@
 // replyRoutes - reply API routes
 // all routes are (api/replies)/:board/:id
 
-// TODO: update this to replies
-
 const express = require('express')
 
 const router = express.Router()

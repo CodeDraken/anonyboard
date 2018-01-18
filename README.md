@@ -9,48 +9,92 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+* NodeJS & NPM
+* MongoDB ( installed and running )
+* Git ( optional )
 
 ### Installing
 
 A step by step series of examples that tell you have to get a development env running
 
-Say what the step will be
+0. Clone or download the repository's zip file
 
 ```
-Give the example
+git clone git@github.com:CodeDraken/anonyboard.git
 ```
 
-And repeat
+**Setting up the Server**
+
+1. CD into the folder and download the NPM packages by using `npm install` or `yarn` if you have Yarn.
 
 ```
-until finished
+cd anonyboard
+yarn
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+2. Once the packages are installed you can start the server and the test suite. I recommend having two terminals or tabs open then run the following commands: ( see full list of commands in [package.json](package.json) )
+
+Terminal 1
+```
+yarn start-watch
+```
+
+Terminal 2
+```
+yarn test-watch
+```
+
+The server and test suite will watch for changes and automatically restart. The server uses port 5000.
+This is only the API server, we will setup the client next.
+
+**Setting up the Client**
+
+The client uses [create-react-app](https://github.com/facebookincubator/create-react-app) as a boilerplate.
+
+1. CD into the client folder and download the NPM packages by using `npm install` or `yarn` if you have Yarn.
+
+```
+cd client
+yarn
+```
+
+2. Once the packages are installed you can start the dev server and the test suite. I recommend having two terminals or tabs open then run the following commands: ( see full list of commands in [client/package.json](client/package.json) )
+
+Terminal 1
+```
+yarn start
+```
+
+Terminal 2
+```
+yarn test
+```
+
+Create-react-app and the test suite will watch for changes and automatically restart. A browser window should automagically open and go to port 3000.
+
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+**For the server**
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+Mocha and Expect is used for testing on the server.
 ```
-Give an example
+yarn test-watch
 ```
 
-### And coding style tests
+**For the client**
 
-Explain what these tests test and why
-
+Jest is used for testing on the client.
 ```
-Give an example
+yarn test
+```
+
+
+### Coding style tests
+
+This project uses the Standard coding style. You can lint by running
+```
+yarn lint
 ```
 
 ## Deployment
@@ -59,9 +103,11 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [NodeJS](https://nodejs.org/) - The server
+* [NodeJS](https://nodejs.org/) - Server
 * [Express](https://github.com/expressjs/express) - Web framework for Node
 * [React](https://github.com/facebook/react) - Front-end library for UI
+* [MongoDB](https://www.mongodb.com/) - Database
+* [StandardJS](https://standardjs.com/) - Coding style
 
 ## Contributing
 

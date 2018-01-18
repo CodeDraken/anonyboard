@@ -1,14 +1,8 @@
 // app.js tests
-
-const mongoose = require('mongoose')
 const request = require('supertest')
 const expect = require('expect')
 
 const app = require('../app')
-
-// after(done => {
-//   mongoose.disconnect(done)
-// })
 
 describe('app.js', () => {
   describe('Test the root path /', () => {
