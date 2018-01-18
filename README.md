@@ -12,6 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 * NodeJS & NPM
 * MongoDB ( installed and running )
 * Git ( optional )
+* Port 3000 open for the client & 5000 for the server
 
 ### Installing
 
