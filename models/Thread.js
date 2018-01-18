@@ -40,10 +40,19 @@ threadSchema.methods = {
   },
 
   updateTitleBody: async function ({ title, body }) {
-    let thread = this
+    const thread = this
 
     thread.title = title || thread.title
     thread.body = body || thread.body
+
+    return thread.save()
+  },
+
+  newReply: async function () {
+    const thread = this
+
+    thread.bumpedAt = Date.now()
+    thread.replyCount++
 
     return thread.save()
   }

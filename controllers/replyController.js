@@ -39,7 +39,7 @@ const replyController = {
       }).save()
 
       const thread = await Thread.findById(threadId)
-      thread.set({ bumpedAt: Date.now() }).save()
+      await thread.newReply()
 
       return res.json(reply)
     } catch (err) {

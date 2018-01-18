@@ -36,6 +36,18 @@ describe('Reply Routes', () => {
       const threadDB = await Thread.findById(testThreads[0]._id)
       expect(+threadDB.bumpedAt).toBeGreaterThan(+testThreads[0].bumpedAt)
     })
+
+    it('updates the replyCount on the thread', async () => {
+      const reply = { body: 'New reply!', password: '123abc' }
+
+      const res = await request(app)
+        .post(`/api/replies/testboard/${testThreads[0]._id}`)
+        .send(reply)
+        .expect(200)
+
+      const threadDB = await Thread.findById(testThreads[0]._id)
+      expect(+threadDB.replyCount).toBeGreaterThan(0)
+    })
   })
 
   describe('GET /api/replies/:board/:id', () => {
