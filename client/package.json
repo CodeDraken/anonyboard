@@ -8,12 +8,20 @@
     }
   },
   "standard": {
-    "globals": ["$", "jQuery", "fetch"],
+    "globals": [
+      "$",
+      "jQuery",
+      "fetch"
+    ],
     "ignore": [
-        "node_modules/**"
+      "node_modules/**"
     ],
     "parser": "babel-eslint",
-    "envs": ["jest", "mocha", "node"]
+    "envs": [
+      "jest",
+      "mocha",
+      "node"
+    ]
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -28,12 +36,15 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "NODE_PATH=src react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "NODE_PATH=src react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "standard",
+    "lint-fix": "standard --fix"
   },
   "devDependencies": {
-    "redux-mock-store": "^1.4.0"
+    "redux-mock-store": "^1.4.0",
+    "standard": "^10.0.3"
   }
 }
