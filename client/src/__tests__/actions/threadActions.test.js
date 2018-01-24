@@ -92,4 +92,33 @@ describe('thread actions', () => {
       expect(dispatchedActions[1]).toEqual(expect.objectContaining(expectedActions[1]))
     })
   })
+
+  describe('deleteThread', () => {
+    it('correctly dispatches DELETE_THREAD types', async () => {
+      const store = createMockStore({ threads: [] })
+      const expectedActions = [
+        { type: types.DELETE_THREAD_REQUEST },
+        { type: types.DELETE_THREAD_SUCCESS, payload: mockThreadArray[0] }
+      ]
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          response: mockThreadArray[0]
+        })
+      })
+
+      await store.dispatch(actions.deleteThread({
+        id: mockThreadArray[0]._id,
+        password: '123abc',
+        board: 'testboard'
+      }))
+      const dispatchedActions = store.getActions()
+
+      expect(dispatchedActions[0]).toEqual(expect.objectContaining(expectedActions[0]))
+
+      expect(dispatchedActions[1]).toEqual(expect.objectContaining(expectedActions[1]))
+    })
+  })
 })
