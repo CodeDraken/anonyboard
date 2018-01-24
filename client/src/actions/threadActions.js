@@ -16,3 +16,19 @@ export const fetchThreads = (board = 'testboard', page = 1, limit = 50) => async
     return dispatch({ type: types.FETCH_THREADS_FAILURE, error })
   }
 }
+
+export const createThread = ({ title, body, password, board }) => async dispatch => {
+  try {
+    dispatch({ type: types.CREATE_THREAD_REQUEST })
+
+    if (!title || !body || !password || !board) {
+      return dispatch({ type: types.CREATE_THREAD_FAILURE, error: 'Invalid thread!' })
+    }
+
+    const res = await axios.post(`/api/threads/${board}`)
+
+    return dispatch({ type: types.CREATE_THREAD_SUCCESS, payload: res.data })
+  } catch (error) {
+    return dispatch({ type: types.CREATE_THREAD_FAILURE, error })
+  }
+}

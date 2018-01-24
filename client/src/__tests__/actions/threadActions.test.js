@@ -4,17 +4,12 @@ import moxios from 'moxios'
 
 import * as types from 'actions/types'
 import * as actions from 'actions/threadActions'
+import { mockThreadArray, mockBoard, mockNewThread } from 'mocks/mockedData'
 
 const middlewares = [ thunk ]
 const createMockStore = configureMockStore(middlewares)
 
 describe('thread actions', () => {
-  const mockThreadArray = [{
-    '_id': '5a601ab04850285e0994284a',
-    'title': 'Test Thread 2',
-    'body': 'Test Body 2'
-  }]
-
   beforeEach(() => {
     moxios.install()
   })
@@ -35,7 +30,7 @@ describe('thread actions', () => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
-          response: mockThreadArray
+          response: mockBoard
         })
       })
 
@@ -48,7 +43,37 @@ describe('thread actions', () => {
 
       expect(dispatchedActions[1]).toEqual(expect.objectContaining({
         type: expectedActions[1].type,
-        payload: mockThreadArray
+        payload: mockBoard
+      }))
+    })
+  })
+
+  describe('createThread', () => {
+    it('correctly dispatches CREATE_THREAD types', async () => {
+      const store = createMockStore({ threads: [] })
+      const expectedActions = [
+        { type: types.CREATE_THREAD_REQUEST },
+        { type: types.CREATE_THREAD_SUCCESS, payload: [] }
+      ]
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          response: mockNewThread
+        })
+      })
+
+      await store.dispatch(actions.createThread(mockNewThread))
+      const dispatchedActions = store.getActions()
+
+      expect(dispatchedActions[0]).toEqual(expect.objectContaining({
+        type: expectedActions[0].type
+      }))
+
+      expect(dispatchedActions[1]).toEqual(expect.objectContaining({
+        type: expectedActions[1].type,
+        payload: mockNewThread
       }))
     })
   })
