@@ -32,3 +32,19 @@ export const createThread = ({ title, body, password, board }) => async dispatch
     return dispatch({ type: types.CREATE_THREAD_FAILURE, error })
   }
 }
+
+export const updateThread = ({ type, id, board, title, body }) => async dispatch => {
+  try {
+    dispatch({ type: types.UPDATE_THREAD_REQUEST })
+
+    if (!type || !id || !board) {
+      return dispatch({ type: types.UPDATE_THREAD_FAILURE, error: 'Invalid type, id, or board' })
+    }
+
+    const res = await axios.patch(`/api/threads/${board}`, { type, id, title, body })
+
+    return dispatch({ type: types.UPDATE_THREAD_SUCCESS, payload: res.data })
+  } catch (error) {
+    return dispatch({ type: types.UPDATE_THREAD_FAILURE, error })
+  }
+}

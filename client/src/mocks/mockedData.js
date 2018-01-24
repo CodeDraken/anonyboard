@@ -5,6 +5,14 @@ export const mockNewThread = {
   password: '123abc'
 }
 
+export const mockUpdate = {
+  type: 'update',
+  id: '5a5d998b54890b334e762bb9',
+  board: 'testboard',
+  title: 'Updated title',
+  body: 'potato'
+}
+
 export const mockThreadArray = [
   {
     '_id': '5a601ab04850285e0994284a',

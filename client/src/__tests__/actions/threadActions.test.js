@@ -4,7 +4,7 @@ import moxios from 'moxios'
 
 import * as types from 'actions/types'
 import * as actions from 'actions/threadActions'
-import { mockThreadArray, mockBoard, mockNewThread } from 'mocks/mockedData'
+import { mockThreadArray, mockBoard, mockNewThread, mockUpdate } from 'mocks/mockedData'
 
 const middlewares = [ thunk ]
 const createMockStore = configureMockStore(middlewares)
@@ -23,7 +23,7 @@ describe('thread actions', () => {
       const store = createMockStore({ threads: [] })
       const expectedActions = [
         { type: types.FETCH_THREADS_REQUEST },
-        { type: types.FETCH_THREADS_SUCCESS, payload: [] }
+        { type: types.FETCH_THREADS_SUCCESS, payload: mockBoard }
       ]
 
       moxios.wait(() => {
@@ -37,14 +37,9 @@ describe('thread actions', () => {
       await store.dispatch(actions.fetchThreads())
       const dispatchedActions = store.getActions()
 
-      expect(dispatchedActions[0]).toEqual(expect.objectContaining({
-        type: expectedActions[0].type
-      }))
+      expect(dispatchedActions[0]).toEqual(expect.objectContaining(expectedActions[0]))
 
-      expect(dispatchedActions[1]).toEqual(expect.objectContaining({
-        type: expectedActions[1].type,
-        payload: mockBoard
-      }))
+      expect(dispatchedActions[1]).toEqual(expect.objectContaining(expectedActions[1]))
     })
   })
 
@@ -53,7 +48,7 @@ describe('thread actions', () => {
       const store = createMockStore({ threads: [] })
       const expectedActions = [
         { type: types.CREATE_THREAD_REQUEST },
-        { type: types.CREATE_THREAD_SUCCESS, payload: [] }
+        { type: types.CREATE_THREAD_SUCCESS, payload: mockNewThread }
       ]
 
       moxios.wait(() => {
@@ -67,14 +62,34 @@ describe('thread actions', () => {
       await store.dispatch(actions.createThread(mockNewThread))
       const dispatchedActions = store.getActions()
 
-      expect(dispatchedActions[0]).toEqual(expect.objectContaining({
-        type: expectedActions[0].type
-      }))
+      expect(dispatchedActions[0]).toEqual(expect.objectContaining(expectedActions[0]))
 
-      expect(dispatchedActions[1]).toEqual(expect.objectContaining({
-        type: expectedActions[1].type,
-        payload: mockNewThread
-      }))
+      expect(dispatchedActions[1]).toEqual(expect.objectContaining(expectedActions[1]))
+    })
+  })
+
+  describe('updateThread', () => {
+    it('correctly dispatches UPDATE_THREAD types', async () => {
+      const store = createMockStore({ threads: [] })
+      const expectedActions = [
+        { type: types.UPDATE_THREAD_REQUEST },
+        { type: types.UPDATE_THREAD_SUCCESS, payload: mockThreadArray[0] }
+      ]
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          response: mockThreadArray[0]
+        })
+      })
+
+      await store.dispatch(actions.updateThread(mockUpdate))
+      const dispatchedActions = store.getActions()
+
+      expect(dispatchedActions[0]).toEqual(expect.objectContaining(expectedActions[0]))
+
+      expect(dispatchedActions[1]).toEqual(expect.objectContaining(expectedActions[1]))
     })
   })
 })
