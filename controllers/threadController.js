@@ -31,7 +31,7 @@ const threadController = {
   },
 
   async getRecentThreads (req, res) {
-    // all boards
+    // TODO: all boards
     try {
       res.send({
         page: 1,
