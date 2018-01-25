@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { BrowserRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 
 import Routes from 'components/Routes'
+import Navbar from 'components/Navbar'
 
 export class App extends Component {
-  static propTypes = {}
+  // static propTypes = {}
 
   render () {
     return (
       <BrowserRouter>
         <React.Fragment>
+          <Navbar />
           App
           <main className='container'>
             { Routes }
