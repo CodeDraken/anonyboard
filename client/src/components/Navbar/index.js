@@ -13,7 +13,7 @@ export default class Navbar extends PureComponent {
           <input className='search-input' placeholder='search' />
           <ul className='nav-items'>
             <Link to='/'>Home</Link>
-            <Link to='/'>Add Post</Link>
+            <Link to='/b/new'>Add Post</Link>
           </ul>
         </div>
       </nav>

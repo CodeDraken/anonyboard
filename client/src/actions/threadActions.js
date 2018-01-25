@@ -13,6 +13,7 @@ export const fetchThreads = (board = 'testboard', page = 1, limit = 50) => async
 
     return dispatch({ type: types.FETCH_THREADS_SUCCESS, payload: res.data })
   } catch (error) {
+    console.log(error)
     return dispatch({ type: types.FETCH_THREADS_FAILURE, error })
   }
 }
