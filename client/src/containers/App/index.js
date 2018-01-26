@@ -14,7 +14,7 @@ export class App extends Component {
       <BrowserRouter>
         <React.Fragment>
           <Navbar />
-          App
+          <h1 className='title'>App</h1>
           <main className='container'>
             { Routes }
           </main>

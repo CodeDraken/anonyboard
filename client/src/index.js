@@ -1,6 +1,7 @@
 // index.js - setup config and render
 
 import 'styles/style.css'
+import 'bulma/css/bulma.css'
 
 import React from 'react'
 import { render } from 'react-dom'

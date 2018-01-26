@@ -30,7 +30,7 @@ export class Board extends Component {
 
     return (
       <div>
-        <h1>/b/{this.props.match.params.board}</h1>
+        <h1 className='title'>/b/{this.props.match.params.board}</h1>
         <div>
           <label htmlFor='limit'>
             Threads per page
