@@ -6,7 +6,7 @@ export default () => {
   return (
     <div>
       Homepage
-    <Link to='/b/testboard'>Test Board</Link>
+      <Link to='/b/testboard'>Test Board</Link>
     </div>
   )
 }
