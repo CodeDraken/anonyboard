@@ -3,3 +3,23 @@
 body {
   font-family: 'Lato', sans-serif;
 }
+
+.navbar {
+  margin-bottom: 2rem;
+}
+
+.navbar-menu {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.navbar-item {
+  align-items: center;
+  display: flex;
+}
+
+.navbar-end, .navbar-start {
+  display: flex;
+}

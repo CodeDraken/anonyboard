@@ -30,10 +30,15 @@ export class Board extends Component {
 
     return (
       <div>
-        <h1 className='title'>/b/{this.props.match.params.board}</h1>
-        <div>
+        <hr />
+        <h1 className='title has-text-centered'>
+          /b/{this.props.match.params.board}
+        </h1>
+        <div className='columns is-centered is-mobile'>
           <label htmlFor='limit'>
-            Threads per page
+              Threads per page:
+          </label>
+          <div className='select'>
             <select name='limit' defaultValue={limit}>
               <option value={10}>10</option>
               <option value={20}>20</option>
@@ -41,9 +46,7 @@ export class Board extends Component {
               <option value={40}>40</option>
               <option value={50}>50</option>
             </select>
-          </label>
-          <span>Page: {page}</span>
-          <span>Last updated: {new Date(lastUpdated).toLocaleTimeString()}</span>
+          </div>
         </div>
         <hr />
         {
@@ -59,3 +62,6 @@ const mapStateToProps = ({ threadsByBoard }) => ({
 })
 
 export default connect(mapStateToProps, { fetchThreads })(Board)
+
+// <span className='column'>Page: {page}</span>
+// <span className='column'>Last updated: {new Date(lastUpdated).toLocaleTimeString()}</span>
