@@ -6,7 +6,8 @@ const defaultState = {
   threads: [],
   page: 1,
   limit: 50,
-  boardName: null
+  boardName: null,
+  lastUpdated: null
 }
 
 export default (state = defaultState, action) => {
@@ -14,9 +15,9 @@ export default (state = defaultState, action) => {
     case types.FETCH_THREADS_REQUEST:
       return { ...state, isFetching: true }
     case types.FETCH_THREADS_FAILURE:
-      return { isFetching: false, error: action.error }
+      return { ...defaultState, error: action.error }
     case types.FETCH_THREADS_SUCCESS:
-      return { isFetching: false, error: null, ...action.payload }
+      return { isFetching: false, error: null, lastUpdated: +new Date(), ...action.payload }
     default: return state
   }
 }
