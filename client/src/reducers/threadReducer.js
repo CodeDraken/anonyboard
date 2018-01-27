@@ -39,7 +39,7 @@ export default (state = defaultState, action) => {
         error: null,
         threads: {
           ...state.threads,
-          [action.payload.id]: action.payload
+          [action.payload._id]: action.payload
         }
       }
     default: return state

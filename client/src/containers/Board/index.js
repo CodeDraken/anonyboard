@@ -12,7 +12,11 @@ export class Board extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchThreads()
+    if (!this.props.threadsByBoard.threads) {
+      this.props.fetchThreads()
+    } else if (Date.now() - this.props.threadsByBoard.lastUpdated > 60000) {
+      this.props.fetchThreads()
+    }
   }
 
   renderContent = () => {
