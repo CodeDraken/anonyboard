@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { fetchSingleThread } from 'actions/threadActions'
 import Loader from 'components/Loader'
+import ThreadContent from 'components/ThreadContent'
 
 export class ThreadPage extends Component {
   static propTypes = {
@@ -24,7 +25,7 @@ export class ThreadPage extends Component {
       case isFetching: return <Loader />
       case !!error: return <p>Error: <em>{error.message}</em></p>
       case !isFetching && !error && !!thread:
-        return <div>{thread.title}</div>
+        return <ThreadContent {...thread} />
       default: return <p>Oops I lost it :(</p>
     }
   }
