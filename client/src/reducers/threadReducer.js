@@ -29,6 +29,19 @@ export default (state = defaultState, action) => {
         ...action.payload,
         threads: formatThreads(action.payload.threads)
       }
+    case types.FETCH_SINGLE_THREAD_REQUEST:
+      return { ...state, isFetching: true }
+    case types.FETCH_SINGLE_THREAD_FAILURE:
+      return { ...state, isFetching: false, error: action.error }
+    case types.FETCH_SINGLE_THREAD_SUCCESS:
+      return {
+        isFetching: false,
+        error: null,
+        threads: {
+          ...state.threads,
+          [action.payload.id]: action.payload
+        }
+      }
     default: return state
   }
 }

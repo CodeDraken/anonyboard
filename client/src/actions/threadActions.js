@@ -18,6 +18,23 @@ export const fetchThreads = (board = 'testboard', page = 1, limit = 50) => async
   }
 }
 
+export const fetchSingleThread = (board, thread) => async dispatch => {
+  try {
+    dispatch({ type: types.FETCH_SINGLE_THREAD_REQUEST })
+
+    if (!board || !thread) {
+      return dispatch({ type: types.FETCH_SINGLE_THREAD_FAILURE, error: 'Invalid board / thread id' })
+    }
+
+    const res = await axios.get(`/api/threads/${board}/${thread}`)
+
+    return dispatch({ type: types.FETCH_SINGLE_THREAD_SUCCESS, payload: res.data })
+  } catch (error) {
+    console.log(error)
+    return dispatch({ type: types.FETCH_SINGLE_THREAD_FAILURE, error })
+  }
+}
+
 export const createThread = ({ title, body, password, board }) => async dispatch => {
   try {
     dispatch({ type: types.CREATE_THREAD_REQUEST })

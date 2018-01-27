@@ -20,7 +20,7 @@ describe('thread actions', () => {
 
   describe('fetchThreads', () => {
     it('correctly dispatches FETCH_THREADS types', async () => {
-      const store = createMockStore({ threads: [] })
+      const store = createMockStore({ threads: {} })
       const expectedActions = [
         { type: types.FETCH_THREADS_REQUEST },
         { type: types.FETCH_THREADS_SUCCESS, payload: mockBoard }
@@ -43,9 +43,34 @@ describe('thread actions', () => {
     })
   })
 
+  describe('fetchSingleThread', () => {
+    it('correctly dispatches FETCH_SINGLE_THREAD types', async () => {
+      const store = createMockStore({ threads: {} })
+      const expectedActions = [
+        { type: types.FETCH_SINGLE_THREAD_REQUEST },
+        { type: types.FETCH_SINGLE_THREAD_SUCCESS, payload: mockThreadArray[0] }
+      ]
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          response: mockThreadArray[0]
+        })
+      })
+
+      await store.dispatch(actions.fetchSingleThread('testboard', mockThreadArray[0]._id))
+      const dispatchedActions = store.getActions()
+
+      expect(dispatchedActions[0]).toEqual(expect.objectContaining(expectedActions[0]))
+
+      expect(dispatchedActions[1]).toEqual(expect.objectContaining(expectedActions[1]))
+    })
+  })
+
   describe('createThread', () => {
     it('correctly dispatches CREATE_THREAD types', async () => {
-      const store = createMockStore({ threads: [] })
+      const store = createMockStore({ threads: {} })
       const expectedActions = [
         { type: types.CREATE_THREAD_REQUEST },
         { type: types.CREATE_THREAD_SUCCESS, payload: mockNewThread }
@@ -70,7 +95,7 @@ describe('thread actions', () => {
 
   describe('updateThread', () => {
     it('correctly dispatches UPDATE_THREAD types', async () => {
-      const store = createMockStore({ threads: [] })
+      const store = createMockStore({ threads: {} })
       const expectedActions = [
         { type: types.UPDATE_THREAD_REQUEST },
         { type: types.UPDATE_THREAD_SUCCESS, payload: mockThreadArray[0] }
@@ -95,7 +120,7 @@ describe('thread actions', () => {
 
   describe('deleteThread', () => {
     it('correctly dispatches DELETE_THREAD types', async () => {
-      const store = createMockStore({ threads: [] })
+      const store = createMockStore({ threads: {} })
       const expectedActions = [
         { type: types.DELETE_THREAD_REQUEST },
         { type: types.DELETE_THREAD_SUCCESS, payload: mockThreadArray[0] }
