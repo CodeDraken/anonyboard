@@ -23,7 +23,7 @@ export class Board extends Component {
       case !!error: return <p>Error: <em>{error.message}</em></p>
       case !isFetching && !error && !!threads:
         return <CardList data={threads}>Threads</CardList>
-      default: return <div />
+      default: return <p>No threads here :(</p>
     }
   }
 
