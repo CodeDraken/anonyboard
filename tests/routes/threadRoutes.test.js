@@ -121,6 +121,32 @@ describe('Thread Routes', () => {
     })
   })
 
+  describe('GET /api/threads/:board/:thread', () => {
+    it('returns a single thread', async () => {
+      try {
+        const res = await request(app).get(`/api/threads/testboard/${testThreads[0]._id}`)
+
+        expect(res.statusCode).toBe(200)
+
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            title: testThreads[0].title,
+            body: testThreads[0].body,
+            __v: expect.any(Number),
+            // _replies: expect.any(Array),
+            bumpedAt: expect.any(String),
+            createdAt: expect.any(String),
+            replyCount: expect.any(Number),
+            votes: expect.any(Number),
+            reports: expect.any(Number)
+          })
+        )
+      } catch (err) {
+        throw err
+      }
+    })
+  })
+
   describe('PATCH /api/threads/:board', () => {
     it('increments reports when receives type === "report"', async () => {
       try {

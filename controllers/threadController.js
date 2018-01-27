@@ -30,17 +30,16 @@ const threadController = {
     }
   },
 
-  async getRecentThreads (req, res) {
-    // TODO: all boards
+  async getSingleThread (req, res) {
     try {
-      res.send({
-        page: 1,
-        board: req.boardName,
-        threads: []
-      })
+      const { board, thread } = req.params
+      const threadData = await Thread
+        .findOne({ board, _id: thread })
+
+      res.send(threadData)
     } catch (err) {
       console.log(err)
-      res.status(500).send('Oops something went wrong!')
+      res.status(500).json({ err })
     }
   },
 

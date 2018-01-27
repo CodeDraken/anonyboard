@@ -6,6 +6,10 @@ const express = require('express')
 const router = express.Router()
 const threadController = require('../controllers/threadController')
 
+// single thread on a board
+router.route('/:board/:thread')
+  .get(threadController.getSingleThread)
+
 // get threads on a specific board
 router.route('/:board')
   .all((req, res, next) => {
