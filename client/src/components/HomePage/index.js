@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 export default () => {
   return (
-    <div>
-      Homepage
+    <div className='has-text-centered'>
+      <h1 className='title'>Homepage</h1>
       <Link to='/b/testboard'>Test Board</Link>
     </div>
   )

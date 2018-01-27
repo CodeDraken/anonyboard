@@ -3,12 +3,17 @@ import * as types from 'actions/types'
 const defaultState = {
   isFetching: false,
   error: null,
-  threads: [],
+  threads: {},
   page: 1,
   limit: 50,
   boardName: null,
   lastUpdated: null
 }
+
+const formatThreads = threads => threads.reduce((acc, thread) => {
+  acc[thread._id] = thread
+  return acc
+}, {})
 
 export default (state = defaultState, action) => {
   switch (action.type) {
@@ -17,7 +22,13 @@ export default (state = defaultState, action) => {
     case types.FETCH_THREADS_FAILURE:
       return { ...defaultState, error: action.error }
     case types.FETCH_THREADS_SUCCESS:
-      return { isFetching: false, error: null, lastUpdated: +new Date(), ...action.payload }
+      return {
+        isFetching: false,
+        error: null,
+        lastUpdated: +new Date(),
+        ...action.payload,
+        threads: formatThreads(action.payload.threads)
+      }
     default: return state
   }
 }

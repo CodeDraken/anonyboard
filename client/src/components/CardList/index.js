@@ -5,13 +5,7 @@ import Card from './Card'
 
 export default class CardList extends PureComponent {
   static propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      body: PropTypes.string,
-      votes: PropTypes.number,
-      createdAt: PropTypes.string,
-      replyCount: PropTypes.number
-    })).isRequired
+    data: PropTypes.object.isRequired
   }
 
   render () {
@@ -19,8 +13,9 @@ export default class CardList extends PureComponent {
 
     return (
       <ul>
-        { data.map(({ _id, title, body, votes, createdAt, replyCount, board }) =>
-          <Card key={_id}{...{
+        { Object.keys(data).map(id => {
+          const { _id, title, body, votes, createdAt, replyCount, board } = data[id]
+          return <Card key={_id}{...{
             title,
             body,
             votes,
@@ -28,10 +23,17 @@ export default class CardList extends PureComponent {
             replyCount,
             _id,
             board
-          }}
-          />
-        )}
+          }} />
+        })}
       </ul>
     )
   }
 }
+
+// PropTypes.shape({
+//   title: PropTypes.string,
+//   body: PropTypes.string,
+//   votes: PropTypes.number,
+//   createdAt: PropTypes.string,
+//   replyCount: PropTypes.number
+// })
