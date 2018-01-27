@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { fetchThreads } from 'actions/threadActions'
 import Loader from 'components/Loader'
+import CardList from 'components/CardList'
 
 export class Board extends Component {
   static propTypes = {
@@ -20,7 +21,8 @@ export class Board extends Component {
     switch (true) {
       case isFetching: return <Loader />
       case !!error: return <p>Error: <em>{error.message}</em></p>
-      case !isFetching && !error && !!threads: return <div>Threads</div>
+      case !isFetching && !error && !!threads:
+        return <CardList data={threads}>Threads</CardList>
       default: return <div />
     }
   }
