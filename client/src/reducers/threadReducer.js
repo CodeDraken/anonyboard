@@ -17,10 +17,14 @@ const formatThreads = threads => threads.reduce((acc, thread) => {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
+    case types.FETCH_SINGLE_THREAD_REQUEST:
     case types.FETCH_THREADS_REQUEST:
       return { ...state, isFetching: true }
+
+    case types.FETCH_SINGLE_THREAD_FAILURE:
     case types.FETCH_THREADS_FAILURE:
-      return { ...defaultState, error: action.error }
+      return { ...state, isFetching: false, error: action.error }
+
     case types.FETCH_THREADS_SUCCESS:
       return {
         isFetching: false,
@@ -29,10 +33,7 @@ export default (state = defaultState, action) => {
         ...action.payload,
         threads: formatThreads(action.payload.threads)
       }
-    case types.FETCH_SINGLE_THREAD_REQUEST:
-      return { ...state, isFetching: true }
-    case types.FETCH_SINGLE_THREAD_FAILURE:
-      return { ...state, isFetching: false, error: action.error }
+
     case types.FETCH_SINGLE_THREAD_SUCCESS:
       return {
         isFetching: false,
@@ -42,6 +43,7 @@ export default (state = defaultState, action) => {
           [action.payload._id]: action.payload
         }
       }
+
     default: return state
   }
 }
