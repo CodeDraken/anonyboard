@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 import colorScale from 'utils/colorScale'
 
@@ -10,11 +11,13 @@ export default class Card extends PureComponent {
     body: PropTypes.string,
     votes: PropTypes.number,
     createdAt: PropTypes.string,
-    replyCount: PropTypes.number
+    replyCount: PropTypes.number,
+    board: PropTypes.string,
+    _id: PropTypes.string
   }
 
   render () {
-    const { title, body, votes, createdAt, replyCount } = this.props
+    const { title, body, votes, createdAt, replyCount, _id, board } = this.props
 
     return (
       <li className='box'>
@@ -25,13 +28,13 @@ export default class Card extends PureComponent {
           </div>
 
           <div className='media-content'>
-            <div className='content'>
-              <p>
-                <strong className='title is-5'>{title} </strong>
+            <Link to={`/b/${board}/${_id}`} className='content'>
+              <p className='has-text-dark'>
+                <strong className='title is-5'>{title}</strong>
                 <br />
                 {body.slice(0, window.innerWidth / 2)}
               </p>
-            </div>
+            </Link>
 
             <nav className='level is-mobile'>
               <div className='level-left'>
@@ -39,12 +42,12 @@ export default class Card extends PureComponent {
                   {moment(createdAt).fromNow()}
                 </small>
                 <span className='level-item has-text-grey'>|</span>
-                <a className='level-item has-text-danger'>
+                <Link to={`/b/${board}/${_id}`} className='level-item has-text-danger'>
                   <span className='icon is-small'>
                     <i className='fa fa-commenting' aria-hidden='true' />
                   </span>
                   <span>&nbsp;{replyCount} comments</span>
-                </a>
+                </Link>
               </div>
             </nav>
           </div>

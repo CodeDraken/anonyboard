@@ -8,7 +8,7 @@ export default class Navbar extends PureComponent {
       <nav className='navbar' role='navigation' aria-label='main navigation'>
         <div className='navbar-brand'>
           <Link to='/' className='navbar-item'>
-            <h1 className='title is-4'>Anonyboard</h1>
+            <h1 className='title is-4 has-text-primary'>Anonyboard</h1>
           </Link>
         </div>
         <div className='navbar-menu is-active is-mobile'>

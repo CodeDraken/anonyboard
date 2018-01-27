@@ -19,8 +19,17 @@ export default class CardList extends PureComponent {
 
     return (
       <ul>
-        { data.map(({ _id, title, body, votes, createdAt, replyCount }) =>
-          <Card key={_id} {...{title, body, votes, createdAt, replyCount}} />
+        { data.map(({ _id, title, body, votes, createdAt, replyCount, board }) =>
+          <Card key={_id}{...{
+            title,
+            body,
+            votes,
+            createdAt,
+            replyCount,
+            _id,
+            board
+          }}
+          />
         )}
       </ul>
     )

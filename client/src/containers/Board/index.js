@@ -38,7 +38,7 @@ export class Board extends Component {
         </h1>
         <div className='columns is-centered is-mobile'>
           <label htmlFor='limit'>
-              Threads per page:
+              Threads per page:&nbsp;
           </label>
           <div className='select'>
             <select name='limit' defaultValue={limit}>
