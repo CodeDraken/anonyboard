@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
+import colorScale from 'utils/colorScale'
+
 export default class Card extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
@@ -15,11 +17,11 @@ export default class Card extends PureComponent {
     const { title, body, votes, createdAt, replyCount } = this.props
 
     return (
-      <div className='box'>
+      <li className='box'>
         <article className='media'>
           <div className='media-left title is-5'>
             <br />
-            <strong className='has-text-danger'>{votes}</strong>
+            <strong className={colorScale([-5, -1, 0, 5, 10], votes)}>{votes}</strong>
           </div>
 
           <div className='media-content'>
@@ -47,7 +49,7 @@ export default class Card extends PureComponent {
             </nav>
           </div>
         </article>
-      </div>
+      </li>
     )
   }
 }
