@@ -17,11 +17,13 @@ const formatThreads = threads => threads.reduce((acc, thread) => {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
+    case types.UPDATE_THREAD_REQUEST:
     case types.FETCH_SINGLE_THREAD_REQUEST:
     case types.FETCH_THREADS_REQUEST:
       return { ...state, isFetching: true }
 
     case types.FETCH_SINGLE_THREAD_FAILURE:
+    case types.UPDATE_THREAD_FAILURE:
     case types.FETCH_THREADS_FAILURE:
       return { ...state, isFetching: false, error: action.error }
 
@@ -39,6 +41,7 @@ export default (state = defaultState, action) => {
       return {
         isFetching: false,
         error: null,
+        boardName: action.payload.board || null,
         threads: {
           ...state.threads,
           [action.payload._id]: action.payload
