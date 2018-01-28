@@ -24,7 +24,7 @@ export default class Card extends PureComponent {
         <article className='media'>
           <div className='media-left title is-5'>
             <br />
-            <strong className={colorScale([-5, -1, 0, 5, 10], votes)}>{votes}</strong>
+            <strong className={colorScale([-5, -3, 0, 5, 10], votes)}>{votes}</strong>
           </div>
 
           <div className='media-content'>

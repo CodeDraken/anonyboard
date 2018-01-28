@@ -34,6 +34,7 @@ export default (state = defaultState, action) => {
         threads: formatThreads(action.payload.threads)
       }
 
+    case types.UPDATE_THREAD_SUCCESS:
     case types.FETCH_SINGLE_THREAD_SUCCESS:
       return {
         isFetching: false,

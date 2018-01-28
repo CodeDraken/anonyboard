@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { fetchSingleThread } from 'actions/threadActions'
+import { fetchSingleThread, updateThread } from 'actions/threadActions'
 import Loader from 'components/Loader'
 import ThreadContent from 'components/ThreadContent'
 
@@ -18,6 +18,14 @@ export class ThreadPage extends Component {
     }
   }
 
+  handleEdit = (type, title, body) => {
+    // this could be refactored out
+    // thread page is the only place you can vote/report/edit for now
+    const { board, _id } = this.props.thread
+
+    this.props.updateThread({type, id: _id, board, title, body})
+  }
+
   renderContent = () => {
     const { isFetching, error, thread } = this.props
 
@@ -25,7 +33,7 @@ export class ThreadPage extends Component {
       case isFetching: return <Loader />
       case !!error: return <p>Error: <em>{error.message}</em></p>
       case !isFetching && !error && !!thread:
-        return <ThreadContent {...thread} />
+        return <ThreadContent {...thread} edit={this.handleEdit} />
       default: return <p>Oops I lost it :(</p>
     }
   }
@@ -47,4 +55,4 @@ const mapStateToProps = ({ threadsByBoard: { threads, error, isFetching } }, own
   error
 })
 
-export default connect(mapStateToProps, { fetchSingleThread })(ThreadPage)
+export default connect(mapStateToProps, { fetchSingleThread, updateThread })(ThreadPage)
