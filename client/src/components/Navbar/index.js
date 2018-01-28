@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default class Navbar extends PureComponent {
   render () {
     return (
-      <nav className='navbar' role='navigation' aria-label='main navigation'>
+      <nav className='navbar' aria-label='main navigation'>
         <div className='navbar-brand'>
           <Link to='/' className='navbar-item'>
             <h1 className='title is-4 has-text-primary'>Anonyboard</h1>

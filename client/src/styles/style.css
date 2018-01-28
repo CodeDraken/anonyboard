@@ -23,3 +23,19 @@ body {
 .navbar-end, .navbar-start {
   display: flex;
 }
+
+.has-padding-tiny {
+  padding: 0.5rem;
+}
+
+.has-padding-small {
+  padding: 1rem;
+}
+
+.has-margin-tiny {
+  margin: 0.5rem;
+}
+
+.has-margin-small {
+  margin: 1rem;
+}
