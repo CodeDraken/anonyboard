@@ -12,15 +12,27 @@ export class Board extends Component {
   }
 
   componentDidMount () {
-    if (!this.props.threadsByBoard.threads) {
-      this.props.fetchThreads()
-    } else if (Date.now() - this.props.threadsByBoard.lastUpdated > 60000) {
-      this.props.fetchThreads()
+    console.log('mounted')
+    const { board } = this.props.match.params
+
+    if (!this.props.threads || this.props.boardName !== board) {
+      this.props.fetchThreads(board)
+    } else if (Date.now() - this.props.lastUpdated > 60000) {
+      this.props.fetchThreads(board)
+    }
+  }
+
+  componentWillUpdate (nextProps) {
+    const nextBoard = nextProps.match.params.board
+    const { board } = this.props.match.params
+
+    if (nextBoard !== board) {
+      this.props.fetchThreads(nextBoard)
     }
   }
 
   renderContent = () => {
-    const { isFetching, error, threads, lastUpdated, page, limit } = this.props.threadsByBoard
+    const { isFetching, error, threads, lastUpdated, page, limit } = this.props
 
     switch (true) {
       case isFetching: return <Loader />
@@ -32,7 +44,7 @@ export class Board extends Component {
   }
 
   render () {
-    const { lastUpdated, page, limit } = this.props.threadsByBoard
+    const { lastUpdated, page, limit } = this.props
 
     return (
       <div>
@@ -63,8 +75,12 @@ export class Board extends Component {
   }
 }
 
-const mapStateToProps = ({ threadsByBoard }) => ({
-  threadsByBoard
+const mapStateToProps = ({ threadsByBoard: { isFetching, error, boardName, threads, lastUpdated } }) => ({
+  threads,
+  isFetching,
+  error,
+  boardName,
+  lastUpdated
 })
 
 export default connect(mapStateToProps, { fetchThreads })(Board)
