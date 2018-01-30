@@ -8,23 +8,30 @@ export default class CardList extends PureComponent {
     data: PropTypes.object.isRequired
   }
 
-  render () {
+  renderCards = () => {
     const { data } = this.props
+    const keys = Object.keys(data)
+      .sort((a, b) => data[a].bumpedAt < data[b].bumpedAt)
 
+    return keys.map(id => {
+      const { _id, title, body, votes, createdAt, replyCount, board } = data[id]
+
+      return <Card key={_id}{...{
+        title,
+        body,
+        votes,
+        createdAt,
+        replyCount,
+        _id,
+        board
+      }} />
+    })
+  }
+
+  render () {
     return (
       <ul>
-        { Object.keys(data).map(id => {
-          const { _id, title, body, votes, createdAt, replyCount, board } = data[id]
-          return <Card key={_id}{...{
-            title,
-            body,
-            votes,
-            createdAt,
-            replyCount,
-            _id,
-            board
-          }} />
-        })}
+        { this.renderCards() }
       </ul>
     )
   }
