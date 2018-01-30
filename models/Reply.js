@@ -9,7 +9,7 @@ const Thread = require('./Thread')
 
 const replySchema = new Schema({
   body: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: +new Date() },
   password: {
     type: String,
     required: true,

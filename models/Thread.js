@@ -21,8 +21,8 @@ const threadSchema = new Schema({
   reports: { type: Number, default: 0 },
 
   // _replies: [{ type: Schema.ObjectId, ref: 'Reply' }],
-  createdAt: { type: Date, default: Date.now() },
-  bumpedAt: { type: Date, default: Date.now() }
+  createdAt: { type: Date, default: +new Date() },
+  bumpedAt: { type: Date, default: +new Date() }
 })
 
 // INSTANCE METHODS
@@ -51,7 +51,7 @@ threadSchema.methods = {
   newReply: async function () {
     const thread = this
 
-    thread.bumpedAt = Date.now()
+    thread.bumpedAt = +new Date()
     thread.replyCount++
 
     return thread.save()
