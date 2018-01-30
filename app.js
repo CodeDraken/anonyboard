@@ -10,6 +10,7 @@ const { mongoose } = require('db/mongoose')
 const app = express()
 
 app.use(helmet())
+app.use(helmet.hidePoweredBy({ setTo: 'Coffee' }))
 
 // middleware
 app.use(bodyParser.json())
