@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 import { fetchThreads } from 'actions/threadActions'
 import Loader from 'components/Loader'
@@ -12,7 +13,6 @@ export class Board extends Component {
   }
 
   componentDidMount () {
-    console.log('mounted')
     const { board } = this.props.match.params
 
     if (!this.props.threads || this.props.boardName !== board) {
@@ -32,13 +32,21 @@ export class Board extends Component {
   }
 
   renderContent = () => {
-    const { isFetching, error, threads, lastUpdated, page, limit } = this.props
+    const { isFetching, error, threads } = this.props
+    const { board } = this.props.match.params
+
+    const matchingThreads = Object.keys(threads)
+      .filter(id => threads[id].board === board)
+      .reduce((acc, id) => {
+        acc[id] = threads[id]
+        return acc
+      }, {})
 
     switch (true) {
       case isFetching: return <Loader />
       case !!error: return <p>Error: <em>{error.message}</em></p>
-      case !isFetching && !error && !!threads:
-        return <CardList data={threads}>Threads</CardList>
+      case !isFetching && !error && !!matchingThreads:
+        return <CardList data={matchingThreads}>Threads</CardList>
       default: return <p>No threads here :(</p>
     }
   }
@@ -52,6 +60,7 @@ export class Board extends Component {
         <h1 className='title has-text-centered'>
           /b/{this.props.match.params.board}
         </h1>
+
         <div className='columns is-centered is-mobile'>
           <label htmlFor='limit'>
               Threads per page:&nbsp;
@@ -66,10 +75,16 @@ export class Board extends Component {
             </select>
           </div>
         </div>
+
+        <p className='has-text-centered'>Last updated: {new Date(lastUpdated).toLocaleTimeString()}</p>
+
         <hr />
         {
           this.renderContent()
         }
+        <br />
+        <button type='button' className='button'>Load more</button>
+        <br />
       </div>
     )
   }

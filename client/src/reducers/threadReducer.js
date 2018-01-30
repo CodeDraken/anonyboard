@@ -33,7 +33,7 @@ export default (state = defaultState, action) => {
         error: null,
         lastUpdated: +new Date(),
         ...action.payload,
-        threads: formatThreads(action.payload.threads)
+        threads: { ...state.threads, ...formatThreads(action.payload.threads) }
       }
 
     case types.UPDATE_THREAD_SUCCESS:
