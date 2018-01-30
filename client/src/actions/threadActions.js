@@ -35,7 +35,7 @@ export const fetchSingleThread = (board, thread) => async dispatch => {
   }
 }
 
-export const createThread = ({ title, body, password, board }) => async dispatch => {
+export const createThread = ({ title, body, password, board, history }) => async dispatch => {
   try {
     dispatch({ type: types.CREATE_THREAD_REQUEST })
 
@@ -43,9 +43,11 @@ export const createThread = ({ title, body, password, board }) => async dispatch
       return dispatch({ type: types.CREATE_THREAD_FAILURE, error: 'Invalid thread!' })
     }
 
-    const res = await axios.post(`/api/threads/${board}`)
+    const res = await axios.post(`/api/threads/${board}`, { title, body, password, board })
 
-    return dispatch({ type: types.CREATE_THREAD_SUCCESS, payload: res.data })
+    dispatch({ type: types.CREATE_THREAD_SUCCESS, payload: res.data })
+
+    history.push(`/b/${board}/${res.data._id}`)
   } catch (error) {
     return dispatch({ type: types.CREATE_THREAD_FAILURE, error })
   }
