@@ -5,6 +5,7 @@ const { Schema } = mongoose
 
 const { voteReport } = require('models/sharedMethods/rating')
 const { hashPass, comparePassword } = require('models/sharedStatics/password')
+const Thread = require('./Thread')
 
 const replySchema = new Schema({
   body: { type: String, required: true },
@@ -52,6 +53,12 @@ replySchema.methods = {
 // HOOKS
 replySchema.pre('save', async function (next) {
   await hashPass(this)
+
+  await Thread.findByIdAndUpdate(this.thread, {
+    $inc: { replyCount: 1 }
+  })
+  .exec()
+
   next()
 })
 

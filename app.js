@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const helmet = require('helmet')
 
 const threadRoutes = require('./routes/threadRoutes')
 const replyRoutes = require('./routes/replyRoutes')
@@ -7,6 +8,8 @@ const replyRoutes = require('./routes/replyRoutes')
 const { mongoose } = require('db/mongoose')
 
 const app = express()
+
+app.use(helmet())
 
 // middleware
 app.use(bodyParser.json())
