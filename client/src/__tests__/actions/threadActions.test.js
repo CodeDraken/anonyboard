@@ -34,7 +34,7 @@ describe('thread actions', () => {
         })
       })
 
-      await store.dispatch(actions.fetchThreads())
+      await store.dispatch(actions.fetchThreads('testboard'))
       const dispatchedActions = store.getActions()
 
       expect(dispatchedActions[0]).toEqual(expect.objectContaining(expectedActions[0]))
