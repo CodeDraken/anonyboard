@@ -13,16 +13,23 @@ export class Board extends Component {
   }
 
   componentDidMount () {
+    // fetches for first time going to board page
+    // will not run again if switching to another board from the board page
     const { board } = this.props.match.params
 
-    if (!this.props.threads || this.props.boardName !== board) {
-      this.props.fetchThreads(board)
-    } else if (Date.now() - this.props.lastUpdated > 60000) {
-      this.props.fetchThreads(board)
-    }
+    this.props.fetchThreads(board)
+
+    // if (!this.props.threads || this.props.boardName !== board) {
+    //   console.log('fetch mount 1')
+    //   this.props.fetchThreads(board)
+    // } else if (Date.now() - this.props.lastUpdated > 60000) {
+    //   console.log('fetch mount 2')
+    //   this.props.fetchThreads(board)
+    // }
   }
 
   componentWillUpdate (nextProps) {
+    // covers case when switching to another board while on board page
     const nextBoard = nextProps.match.params.board
     const { board } = this.props.match.params
 
