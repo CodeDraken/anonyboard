@@ -11,11 +11,6 @@ const defaultState = {
   replyId: null
 }
 
-const formatThreads = replies => replies.reduce((acc, reply) => {
-  acc[reply._id] = reply
-  return acc
-}, {})
-
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.UPDATE_REPLY_REQUEST:

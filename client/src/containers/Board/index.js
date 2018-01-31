@@ -46,7 +46,7 @@ export class Board extends Component {
       case isFetching: return <Loader />
       case !!error: return <p>Error: <em>{error.message}</em></p>
       case !isFetching && !error && !!matchingThreads:
-        return <CardList data={matchingThreads}>Threads</CardList>
+        return <CardList data={matchingThreads} />
       default: return <p>No threads here :(</p>
     }
   }

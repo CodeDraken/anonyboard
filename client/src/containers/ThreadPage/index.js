@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { fetchSingleThread, updateThread } from 'actions/threadActions'
 import Loader from 'components/Loader'
 import ThreadContent from 'components/ThreadContent'
+import Replies from 'containers/Replies'
 
 export class ThreadPage extends Component {
   static propTypes = {
@@ -39,11 +40,13 @@ export class ThreadPage extends Component {
   }
 
   render () {
-    const { thread } = this.props
+    const { threadObj } = this.props
+    const { board, thread } = this.props.match.params
 
     return (
       <div>
         {this.renderContent()}
+        <Replies {...{ board, thread }} />
       </div>
     )
   }
