@@ -30,12 +30,13 @@ export default (state = defaultState, action) => {
       }
 
     case types.UPDATE_REPLY_SUCCESS:
+      console.log(state.replies.length)
       return {
+        ...state,
         isFetching: false,
         error: null,
-        boardName: action.payload.board || null,
         replies: [
-          ...state.replies,
+          ...state.replies.filter(reply => reply._id !== action.payload._id),
           action.payload
         ]
       }

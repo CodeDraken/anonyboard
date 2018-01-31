@@ -38,7 +38,8 @@ export const createReply = ({ body, password, board, thread }) => async dispatch
   }
 }
 
-export const updateReply = ({ type, id, board, thread, title, body }) => async dispatch => {
+export const updateReply = ({ type, id, board, thread, body }) => async dispatch => {
+  console.log('update action')
   try {
     dispatch({ type: types.UPDATE_REPLY_REQUEST })
 
@@ -46,7 +47,7 @@ export const updateReply = ({ type, id, board, thread, title, body }) => async d
       return dispatch({ type: types.UPDATE_REPLY_FAILURE, error: 'Invalid type, id, or board' })
     }
 
-    const res = await axios.patch(`/api/replies/${board}/${thread}`, { type, id, title, body })
+    const res = await axios.patch(`/api/replies/${board}/${thread}`, { type, id, body })
 
     return dispatch({ type: types.UPDATE_REPLY_SUCCESS, payload: res.data })
   } catch (error) {

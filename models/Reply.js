@@ -54,11 +54,6 @@ replySchema.methods = {
 replySchema.pre('save', async function (next) {
   await hashPass(this)
 
-  await Thread.findByIdAndUpdate(this.thread, {
-    $inc: { replyCount: 1 }
-  })
-  .exec()
-
   next()
 })
 
