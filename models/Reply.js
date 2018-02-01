@@ -75,8 +75,6 @@ replySchema.post('remove', async function (next) {
   } catch (error) {
     throw error
   }
-
-  next()
 })
 
 module.exports = mongoose.model('Reply', replySchema)
