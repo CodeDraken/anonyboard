@@ -4,7 +4,7 @@ import moment from 'moment'
 
 export default class ReplyControls extends PureComponent {
   render () {
-    const { createdAt, upvote, downvote, report, rateReply } = this.props
+    const { createdAt, upvote, downvote, report, rateReply, reports } = this.props
 
     return (
       <React.Fragment>
@@ -32,6 +32,7 @@ export default class ReplyControls extends PureComponent {
           <span className='icon is-small'>
             <i className='fa fa-flag' aria-hidden='true' />
           </span>
+          <span>{reports}</span>
         </button>
       </React.Fragment>
     )

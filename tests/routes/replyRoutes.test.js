@@ -156,7 +156,8 @@ describe('Reply Routes', () => {
         const update = {
           type: 'update',
           id: testReplies[0]._id,
-          body: 'Updated body'
+          body: 'Updated body',
+          password: testReplies[0].password
         }
 
         const res = await request(app)

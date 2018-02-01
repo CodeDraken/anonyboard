@@ -27,21 +27,16 @@ export default class Reply extends PureComponent {
     const { _id, board, thread } = this.props
     const { body } = this.state
 
-    console.log('rating', type, _id, board, thread, body)
-
     this.props.replyActions.updateReply({type, id: _id, board, thread, body})
   }
 
-  // handleUpvote = () => this.props.updateReply('upvote', id, board, thread, body)
-
-  // handleDownvote = () => this.props.updateReply('downvote')
-
-  // handleReport = () => this.props.updateReply('report')
-
   handleUpdateReply = () => {
+    const { _id, board, thread } = this.props
     const { password, body } = this.state
+
     if (password.length > 0 && body.length > 0 && body !== this.props.body) {
       console.log('update thread', body, password)
+      this.props.replyActions.updateReply({ type: 'update', body, password })
     }
   }
 
@@ -81,7 +76,7 @@ export default class Reply extends PureComponent {
                       </span>
                     </button>
                     : <ReplyControls
-                      {...{createdAt}}
+                      {...{createdAt, reports}}
                       rateReply={this.handleRateReply}
                       />
                 }

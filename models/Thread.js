@@ -39,13 +39,18 @@ threadSchema.methods = {
     return comparePassword(password, hashedPassword.password)
   },
 
-  updateTitleBody: async function ({ title, body }) {
+  updateTitleBody: async function ({ title, body, password }) {
     const thread = this
+    const isCorrectPass = await thread.comparePassword(password)
 
-    thread.title = title || thread.title
-    thread.body = body || thread.body
+    if (isCorrectPass) {
+      thread.title = title || thread.title
+      thread.body = body || thread.body
 
-    return thread.save()
+      return thread.save()
+    }
+
+    return { error: 'Invalid password!' }
   },
 
   newReply: async function () {

@@ -51,7 +51,7 @@ const replyController = {
   async updateReply (req, res) {
     // rate, report, or update
     try {
-      const { type, id } = req.body
+      const { type, id, password } = req.body
       const action = getUpdateAction(type)
 
       if (!action) return res.status(400).send({ error: 'Invalid rating type!' })
@@ -59,7 +59,7 @@ const replyController = {
       const reply = await Reply.findById(id)
       const updated = await reply[action]({ ...req.body, type: action })
 
-      res.json(updated)
+      return res.json(updated)
     } catch (err) {
       console.log(err)
       res.status(500).send('Oops something went wrong!')

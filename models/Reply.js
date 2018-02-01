@@ -39,12 +39,17 @@ replySchema.methods = {
     return comparePassword(password, hashedPassword.password)
   },
 
-  updateTitleBody: async function ({ body }) {
+  updateTitleBody: async function ({ body, password }) {
     let reply = this
+    const isCorrectPass = await reply.comparePassword(password)
 
-    reply.body = body || reply.body
+    if (isCorrectPass) {
+      reply.body = body || reply.body
 
-    return reply.save()
+      return reply.save()
+    }
+
+    return { error: 'Invalid password!' }
   }
 }
 

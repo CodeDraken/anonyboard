@@ -209,7 +209,8 @@ describe('Thread Routes', () => {
           type: 'update',
           id: testThreads[0]._id,
           title: 'Updated title',
-          body: 'Updated body'
+          body: 'Updated body',
+          password: testThreads[0].password
         }
 
         const res = await request(app)
