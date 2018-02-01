@@ -29,6 +29,7 @@ export default (state = defaultState, action) => {
         ...action.payload
       }
 
+    case types.CREATE_REPLY_SUCCESS:
     case types.UPDATE_REPLY_SUCCESS:
       return {
         ...state,

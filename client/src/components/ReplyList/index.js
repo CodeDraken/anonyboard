@@ -13,15 +13,17 @@ export default class ReplyList extends PureComponent {
 
     return (
       <ul>
-        { replies.map(reply =>
-          <Reply
-            replyActions={this.props.replyActions}
-            thread={this.props.thread}
-            board={this.props.board}
-            key={reply._id}
-            {...reply}
-          />
-        )}
+        { replies
+            .sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt))
+            .map(reply =>
+              <Reply
+                replyActions={this.props.replyActions}
+                thread={this.props.thread}
+                board={this.props.board}
+                key={reply._id}
+                {...reply}
+              />)
+      }
       </ul>
     )
   }

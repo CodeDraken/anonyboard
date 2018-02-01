@@ -21,8 +21,8 @@ const threadSchema = new Schema({
   reports: { type: Number, default: 0 },
 
   // _replies: [{ type: Schema.ObjectId, ref: 'Reply' }],
-  createdAt: { type: Date, default: +new Date() },
-  bumpedAt: { type: Date, default: +new Date() }
+  createdAt: { type: Date },
+  bumpedAt: { type: Date }
 })
 
 // INSTANCE METHODS
@@ -68,6 +68,10 @@ threadSchema.methods = {
 // HOOKS
 threadSchema.pre('save', async function (next) {
   await hashPass(this)
+
+  this.createdAt = +new Date()
+  this.bumpedAt = +new Date()
+
   next()
 })
 

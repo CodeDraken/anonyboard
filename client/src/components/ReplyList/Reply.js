@@ -60,7 +60,7 @@ export default class Reply extends PureComponent {
               <br />
               {
                 this.state.edit
-                  ? <textarea value={this.state.body} onChange={this.handleBody} />
+                  ? <textarea className='textarea' value={this.state.body} onChange={this.handleBody} />
                   : <p className='has-text-dark'>{body}</p>
               }
 

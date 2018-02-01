@@ -9,7 +9,7 @@ const Thread = require('./Thread')
 
 const replySchema = new Schema({
   body: { type: String, required: true },
-  createdAt: { type: Date, default: +new Date() },
+  createdAt: { type: Date },
   password: {
     type: String,
     required: true,
@@ -58,6 +58,8 @@ replySchema.methods = {
 // HOOKS
 replySchema.pre('save', async function (next) {
   await hashPass(this)
+
+  this.createdAt = +new Date()
 
   next()
 })
