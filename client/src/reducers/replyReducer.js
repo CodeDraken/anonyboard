@@ -41,6 +41,12 @@ export default (state = defaultState, action) => {
         ]
       }
 
+    case types.DELETE_REPLY_SUCCESS:
+      return {
+        ...state,
+        replies: state.replies.filter(reply => reply._id !== action.payload._id)
+      }
+
     default: return state
   }
 }

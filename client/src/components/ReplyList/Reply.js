@@ -30,11 +30,24 @@ export default class Reply extends PureComponent {
     this.props.replyActions.updateReply({type, id: _id, board, thread, body})
   }
 
+  handleDeleteReply = () => {
+    const { _id, board, thread } = this.props
+    const { password } = this.state
+
+    if (password.length > 5) {
+      this.props.replyActions.deleteReply({ id: _id, board, thread, password })
+      this.setState({
+        edit: false,
+        password: ''
+      })
+    }
+  }
+
   handleUpdateReply = () => {
     const { _id, board, thread } = this.props
     const { password, body } = this.state
 
-    if (password.length > 0 && body.length > 0 && body !== this.props.body) {
+    if (password.length > 5 && body.length > 3 && body !== this.props.body) {
       this.props.replyActions.updateReply({ type: 'update', id: _id, board, thread, body, password })
       this.setState({
         edit: false,
@@ -71,12 +84,24 @@ export default class Reply extends PureComponent {
 
                 {
                   this.state.edit
-                    ? <button onClick={this.handleUpdateReply}
-                      type='button' className='button is-success is-outlined'>
-                      <span className='icon is-small'>
-                        <i className='fa fa-check' aria-hidden='true' />
-                      </span>
-                    </button>
+                    ? (<React.Fragment>
+                      <button onClick={this.handleUpdateReply}
+                        type='button' className='button is-success is-outlined'>
+                        <span className='icon is-small'>
+                          <i className='fa fa-check' aria-hidden='true' />
+                        </span>
+                      </button>
+
+                      <span className='has-margin-tiny' />
+
+                      <button onClick={this.handleDeleteReply}
+                        type='button' className='button is-danger is-outlined'>
+                        <span className='icon is-small'>
+                          <i className='fa fa-trash' aria-hidden='true' />
+                        </span>
+                      </button>
+                    </React.Fragment>
+                    )
                     : <ReplyControls
                       {...{createdAt, reports}}
                       rateReply={this.handleRateReply}

@@ -63,7 +63,7 @@ export const deleteReply = ({ id, thread, board, password }) => async dispatch =
       return dispatch({ type: types.DELETE_REPLY_FAILURE, error: 'Invalid type, id, or board' })
     }
 
-    const res = await axios.patch(`/api/replies/${board}/${thread}`, { id, board, password })
+    const res = await axios.delete(`/api/replies/${board}/${thread}`, {data: { id, password }})
 
     return dispatch({ type: types.DELETE_REPLY_SUCCESS, payload: res.data })
   } catch (error) {
