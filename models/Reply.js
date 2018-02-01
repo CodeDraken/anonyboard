@@ -64,4 +64,19 @@ replySchema.pre('save', async function (next) {
   next()
 })
 
+replySchema.post('remove', async function (next) {
+  const reply = this
+
+  try {
+    Thread.findByIdAndUpdate(reply.thread, {
+      $inc: { replyCount: -1 }
+    })
+    .exec()
+  } catch (error) {
+    throw error
+  }
+
+  next()
+})
+
 module.exports = mongoose.model('Reply', replySchema)
