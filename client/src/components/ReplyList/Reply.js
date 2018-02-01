@@ -35,13 +35,15 @@ export default class Reply extends PureComponent {
     const { password, body } = this.state
 
     if (password.length > 0 && body.length > 0 && body !== this.props.body) {
-      console.log('update thread', body, password)
-      this.props.replyActions.updateReply({ type: 'update', body, password })
+      this.props.replyActions.updateReply({ type: 'update', id: _id, board, thread, body, password })
+      this.setState({
+        edit: false,
+        password: ''
+      })
     }
   }
 
   render () {
-    console.log(this.props)
     const { body, createdAt, reports, votes, _id } = this.props
 
     return (

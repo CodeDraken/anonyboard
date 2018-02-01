@@ -49,7 +49,7 @@ replySchema.methods = {
       return reply.save()
     }
 
-    return { error: 'Invalid password!' }
+    throw new Error('Invalid password!')
   }
 }
 

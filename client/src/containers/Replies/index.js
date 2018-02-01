@@ -26,9 +26,9 @@ export class Replies extends PureComponent {
     } = this.props
 
     switch (true) {
-      case isFetching: return <Loader />
-      case !!error: return <p>Error: <em>{error.message}</em></p>
-      case !isFetching && !error && replies.length > 0:
+      case isFetching && !replies.length > 0: return <Loader />
+      // case !!error: return <p>Error: <em>{error.message}</em></p>
+      case replies.length > 0:
         return <ReplyList
           replyActions={{ createReply, updateReply, deleteReply }}
           {...{board, thread}}

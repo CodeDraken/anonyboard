@@ -30,7 +30,6 @@ export default (state = defaultState, action) => {
       }
 
     case types.UPDATE_REPLY_SUCCESS:
-      console.log(state.replies.length)
       return {
         ...state,
         isFetching: false,

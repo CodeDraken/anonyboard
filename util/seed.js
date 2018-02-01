@@ -12,7 +12,8 @@ const testThreads = [
     // _replies: [ testReplies[0]._id, testReplies[1]._id ],
     _id: new ObjectId(),
     bumpedAt: Date.now(),
-    createdAt: Date.now()
+    createdAt: Date.now(),
+    replyCount: 2
   },
 
   {
@@ -22,7 +23,8 @@ const testThreads = [
     password: '123abc',
     _id: new ObjectId(),
     bumpedAt: Date.now(),
-    createdAt: Date.now()
+    createdAt: Date.now(),
+    replyCount: 1
   }
 ]
 

@@ -50,7 +50,7 @@ threadSchema.methods = {
       return thread.save()
     }
 
-    return { error: 'Invalid password!' }
+    throw new Error('Invalid password!')
   },
 
   newReply: async function () {

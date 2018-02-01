@@ -18,7 +18,8 @@ export default class ReplyList extends PureComponent {
             replyActions={this.props.replyActions}
             thread={this.props.thread}
             board={this.props.board}
-            key={reply._id} {...reply}
+            key={reply._id}
+            {...reply}
           />
         )}
       </ul>
