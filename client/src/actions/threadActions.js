@@ -53,7 +53,7 @@ export const createThread = ({ title, body, password, board, history }) => async
   }
 }
 
-export const updateThread = ({ type, id, board, title, body }) => async dispatch => {
+export const updateThread = ({ type, id, board, title, body, password }) => async dispatch => {
   try {
     dispatch({ type: types.UPDATE_THREAD_REQUEST })
 
@@ -61,7 +61,7 @@ export const updateThread = ({ type, id, board, title, body }) => async dispatch
       return dispatch({ type: types.UPDATE_THREAD_FAILURE, error: 'Invalid type, id, or board' })
     }
 
-    const res = await axios.patch(`/api/threads/${board}`, { type, id, title, body })
+    const res = await axios.patch(`/api/threads/${board}`, { type, id, title, body, password })
 
     return dispatch({ type: types.UPDATE_THREAD_SUCCESS, payload: res.data })
   } catch (error) {
@@ -69,7 +69,7 @@ export const updateThread = ({ type, id, board, title, body }) => async dispatch
   }
 }
 
-export const deleteThread = ({ id, board, password }) => async dispatch => {
+export const deleteThread = ({ id, board, password, history }) => async dispatch => {
   try {
     dispatch({ type: types.DELETE_THREAD_REQUEST })
 
@@ -77,9 +77,10 @@ export const deleteThread = ({ id, board, password }) => async dispatch => {
       return dispatch({ type: types.DELETE_THREAD_FAILURE, error: 'Invalid type, id, or board' })
     }
 
-    const res = await axios.patch(`/api/threads/${board}`, { id, board, password })
+    const res = await axios.delete(`/api/threads/${board}`, {data: { id, board, password }})
 
-    return dispatch({ type: types.DELETE_THREAD_SUCCESS, payload: res.data })
+    dispatch({ type: types.DELETE_THREAD_SUCCESS, payload: res.data })
+    history.push(`/b/${board}`)
   } catch (error) {
     return dispatch({ type: types.DELETE_THREAD_FAILURE, error })
   }

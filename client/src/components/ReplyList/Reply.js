@@ -25,9 +25,8 @@ export default class Reply extends PureComponent {
 
   handleRateReply = type => () => {
     const { _id, board, thread } = this.props
-    const { body } = this.state
 
-    this.props.replyActions.updateReply({type, id: _id, board, thread, body})
+    this.props.replyActions.updateReply({ type, id: _id, board, thread })
   }
 
   handleDeleteReply = () => {

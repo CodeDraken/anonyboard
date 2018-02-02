@@ -48,6 +48,16 @@ export default (state = defaultState, action) => {
         }
       }
 
+    case types.DELETE_THREAD_SUCCESS:
+      const newThreads = { ...state.threads }
+
+      delete newThreads[action.payload._id]
+
+      return {
+        ...state,
+        threads: newThreads
+      }
+
     default: return state
   }
 }
