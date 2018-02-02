@@ -22,7 +22,7 @@ app.use('/api/replies', replyRoutes)
 // production server
 if (process.env.NODE_ENV === 'production') {
   // serve production assets
-  app.use(express.static('client/buid'))
+  app.use(express.static('client/build'))
 
   // serve index.html if unrecognized route
   const path = require('path')
