@@ -6,8 +6,14 @@ import moment from 'moment'
 import { fetchThreads } from 'actions/threadActions'
 import Loader from 'components/Loader'
 import CardList from 'components/CardList'
+import PaginationButton from './PaginationButton'
 
 export class Board extends Component {
+  state = {
+    page: 1,
+    limit: 10
+  }
+
   static propTypes = {
     fetchThreads: PropTypes.func.isRequired
   }
@@ -16,25 +22,37 @@ export class Board extends Component {
     // fetches for first time going to board page
     // will not run again if switching to another board from the board page
     const { board } = this.props.match.params
+    const { page, limit } = this.state
 
-    this.props.fetchThreads(board)
-
-    // if (!this.props.threads || this.props.boardName !== board) {
-    //   console.log('fetch mount 1')
-    //   this.props.fetchThreads(board)
-    // } else if (Date.now() - this.props.lastUpdated > 60000) {
-    //   console.log('fetch mount 2')
-    //   this.props.fetchThreads(board)
-    // }
+    this.props.fetchThreads(board, page, limit)
   }
 
   componentWillUpdate (nextProps) {
     // covers case when switching to another board while on board page
     const nextBoard = nextProps.match.params.board
     const { board } = this.props.match.params
+    const { page, limit } = this.state
 
     if (nextBoard !== board) {
-      this.props.fetchThreads(nextBoard)
+      this.props.fetchThreads(board, page, limit)
+    }
+  }
+
+  handleLimit = event => this.setState({ limit: +event.target.value })
+
+  handlePage = (page) => {
+    this.setState({ page })
+  }
+
+  incPage = n => () => {
+    const { threads, fetchThreads, board } = this.props
+    const { page, limit } = this.state
+    const next = page + n
+
+    if (next > 0 && n > 0 && Object.keys(threads).length) {
+      this.setState({ page: next }, () => fetchThreads(board, this.state.page, this.state.limit))
+    } else if (next > 0 && n < 0) {
+      this.setState({ page: next }, () => fetchThreads(board, this.state.page, this.state.limit))
     }
   }
 
@@ -52,14 +70,15 @@ export class Board extends Component {
     switch (true) {
       case isFetching: return <Loader />
       case !!error: return <p>Error: <em>{error.message}</em></p>
-      case !isFetching && !error && !!matchingThreads:
+      case !isFetching && !error && !!Object.keys(matchingThreads).length:
         return <CardList data={matchingThreads} />
       default: return <p>No threads here :(</p>
     }
   }
 
   render () {
-    const { lastUpdated, page, limit } = this.props
+    const { lastUpdated } = this.props
+    const { page, limit } = this.state
 
     return (
       <div>
@@ -72,16 +91,27 @@ export class Board extends Component {
           <label htmlFor='limit'>
               Threads per page:&nbsp;
           </label>
-          <div className='select'>
-            <select name='limit' defaultValue={limit}>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={30}>30</option>
-              <option value={40}>40</option>
-              <option value={50}>50</option>
-            </select>
+          <div className='field'>
+            <input name='limit' type='number' onChange={this.handleLimit} value={this.state.limit} />
           </div>
         </div>
+
+        <nav className='pagination is-centered' role='navigation' aria-label='pagination'>
+          <a className='pagination-previous' onClick={this.incPage(-1)}>Previous</a>
+          <a className='pagination-next' onClick={this.incPage(1)}>Next page</a>
+          <ul className='pagination-list'>
+            <li><a className='pagination-link' aria-label={`you are on page ${page}`}>{page}</a></li>
+          </ul>
+          {/* <ul className='pagination-list'>
+            <PaginationButton page={1} handleClick={this.handlePage} />
+            <li><span className='pagination-ellipsis'>&hellip;</span></li>
+            <li><a className='pagination-link' aria-label='Goto page 45'>45</a></li>
+            <PaginationButton page={this.state.page} isActive handleClick={this.handlePage} />
+            <li><a className='pagination-link' aria-label='Goto page 47'>47</a></li>
+            <li><span className='pagination-ellipsis'>&hellip;</span></li>
+            <li><a className='pagination-link' aria-label='Goto page 86'>86</a></li>
+          </ul> */}
+        </nav>
 
         <p className='has-text-centered'>Last updated: {new Date(lastUpdated).toLocaleTimeString()}</p>
 
@@ -89,8 +119,6 @@ export class Board extends Component {
         {
           this.renderContent()
         }
-        <br />
-        <button type='button' className='button'>Load more</button>
         <br />
       </div>
     )
