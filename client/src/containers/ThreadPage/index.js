@@ -30,21 +30,24 @@ export class ThreadPage extends Component {
   renderContent = () => {
     const { isFetching, error, thread } = this.props
 
+    console.log(thread && thread.bumpedAt, '|', thread && thread.createdAt)
+
     switch (true) {
-      case isFetching: return <Loader />
-      case !!error: return <p>Error: <em>{error.message}</em></p>
-      case !isFetching && !error && !!thread:
+      case isFetching && !thread: return <Loader />
+      // case !!error: return <p>Error: <em>{error.message}</em></p>
+      case !!thread:
         return <ThreadContent {...thread} edit={this.handleEdit} />
       default: return <p>Oops I lost it :(</p>
     }
   }
 
   render () {
-    const { threadObj } = this.props
+    const { threadObj, error } = this.props
     const { board, thread } = this.props.match.params
 
     return (
       <div>
+        {error ? <p>Error: <em>{error.message}</em></p> : null}
         {this.renderContent()}
         <Replies {...{ board, thread }} />
       </div>

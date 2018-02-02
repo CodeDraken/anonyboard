@@ -67,10 +67,13 @@ threadSchema.methods = {
 
 // HOOKS
 threadSchema.pre('save', async function (next) {
-  await hashPass(this)
+  const thread = this
+  await hashPass(thread)
 
-  this.createdAt = +new Date()
-  this.bumpedAt = +new Date()
+  if (!thread.createdAt || !thread.bumpedAt) {
+    thread.createdAt = +new Date()
+    thread.bumpedAt = +new Date()
+  }
 
   next()
 })

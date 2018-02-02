@@ -11,7 +11,7 @@ export default class CardList extends PureComponent {
   renderCards = () => {
     const { data } = this.props
     const keys = Object.keys(data)
-      .sort((a, b) => data[a].bumpedAt < data[b].bumpedAt)
+      .sort((a, b) => +new Date(data[b].bumpedAt) - +new Date(data[a].bumpedAt))
 
     return keys.map(id => {
       const { _id, title, body, votes, createdAt, replyCount, board } = data[id]

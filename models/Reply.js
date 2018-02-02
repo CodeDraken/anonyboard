@@ -57,9 +57,12 @@ replySchema.methods = {
 
 // HOOKS
 replySchema.pre('save', async function (next) {
-  await hashPass(this)
+  const reply = this
+  await hashPass(reply)
 
-  this.createdAt = +new Date()
+  if (!reply.createdAt) {
+    reply.createdAt = +new Date()
+  }
 
   next()
 })
