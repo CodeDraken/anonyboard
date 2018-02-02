@@ -3,6 +3,10 @@
 Anonyboard is an anonymous messaging board. There are no accounts, you manage your posts using a password. This is a project on [FreeCodeCamp](http://freecodecamp.com/)
 
 
+**Try it out on Heroku:**
+https://gentle-cliffs-22758.herokuapp.com/
+
+
 ## Getting Started ( WIP )
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
