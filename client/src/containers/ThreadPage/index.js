@@ -30,8 +30,6 @@ export class ThreadPage extends Component {
   renderContent = () => {
     const { isFetching, error, thread } = this.props
 
-    console.log(thread && thread.bumpedAt, '|', thread && thread.createdAt)
-
     switch (true) {
       case isFetching && !thread: return <Loader />
       // case !!error: return <p>Error: <em>{error.message}</em></p>

@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import * as types from './types'
+import { fetchSingleThread } from './threadActions'
 
 export const fetchReplies = (board, thread, page = 1, limit = 50) => async dispatch => {
   try {
@@ -33,6 +34,8 @@ export const createReply = ({ body, password, board, thread }) => async dispatch
     const res = await axios.post(`/api/replies/${board}/${thread}`, { body, password })
 
     dispatch({ type: types.CREATE_REPLY_SUCCESS, payload: res.data })
+
+    dispatch(fetchSingleThread(board, thread))
   } catch (error) {
     return dispatch({ type: types.CREATE_REPLY_FAILURE, error })
   }
