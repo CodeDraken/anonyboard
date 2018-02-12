@@ -162,7 +162,7 @@ export default class ThreadContent extends PureComponent {
             </div>
           </aside>
 
-          <article className='column is-three-fifths has-text-centered'>
+          <article className='column is-three-fifths'>
             <div>
 
               {
@@ -172,7 +172,7 @@ export default class ThreadContent extends PureComponent {
                     <textarea className='textarea' value={this.state.body} onChange={this.handleBody} />
                   </React.Fragment>
                   : <React.Fragment>
-                    <h2 className='title'>{title}</h2>
+                    <h2 className='title has-text-centered'>{title}</h2>
                     <p className='has-text-dark'>{body}</p>
                   </React.Fragment>
               }
