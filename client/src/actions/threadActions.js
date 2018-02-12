@@ -2,8 +2,12 @@ import axios from 'axios'
 
 import * as types from './types'
 
-export const fetchThreads = (board = 'testboard', page = 1, limit = 50) => async dispatch => {
+export const fetchThreads = (board, page = 1, limit = 50) => async dispatch => {
   try {
+    if (!board) {
+      return dispatch({ type: types.FETCH_THREADS_FAILURE, error: 'Invalid Board!' })
+    }
+
     dispatch({ type: types.FETCH_THREADS_REQUEST })
 
     page = page && typeof page === 'number' ? +page : 1

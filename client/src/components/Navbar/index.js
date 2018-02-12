@@ -26,6 +26,7 @@ export default class Navbar extends PureComponent {
           <div className='navbar-end'>
             <Link to='/' className='navbar-item'>Home</Link>
             <Link to='/b/testboard' className='navbar-item'>Test Board</Link>
+            {/* <Link to='/b/testboard' className='navbar-item'>Test Board</Link> */}
             <Link to='/b/new' className='navbar-item'>Add Post</Link>
           </div>
         </div>

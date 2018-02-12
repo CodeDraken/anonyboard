@@ -34,7 +34,7 @@ export class Board extends Component {
     const { page, limit } = this.state
 
     if (nextBoard !== board) {
-      this.props.fetchThreads(board, page, limit)
+      this.props.fetchThreads(nextBoard, page, limit)
     }
   }
 
@@ -45,7 +45,8 @@ export class Board extends Component {
   }
 
   incPage = n => () => {
-    const { threads, fetchThreads, board } = this.props
+    const { threads, fetchThreads } = this.props
+    const { board } = this.props.match.params
     const { page, limit } = this.state
     const next = page + n
 
@@ -69,7 +70,7 @@ export class Board extends Component {
 
     switch (true) {
       case isFetching: return <Loader />
-      case !!error: return <p>Error: <em>{error.message}</em></p>
+      case !!error: return <p>Error: <em>{error.message || error}</em></p>
       case !isFetching && !error && !!Object.keys(matchingThreads).length:
         return <CardList data={matchingThreads} />
       default: return <p>No threads here :(</p>
